@@ -1,8 +1,57 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+
+interface ContactInfo {
+  phone: string;
+  email: string;
+  address: string;
+}
+
+interface SocialMedia {
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  whatsapp: string;
+}
 
 const Footer = () => {
+  const [contactInfo, setContactInfo] = useState<ContactInfo>({
+    phone: '+49 123 456 789',
+    email: 'info@sternenhimmelauto.de',
+    address: 'Musterstraße 123, 12345 Musterstadt'
+  });
+  const [socialMedia, setSocialMedia] = useState<SocialMedia>({
+    facebook: '#',
+    instagram: '#',
+    twitter: '#',
+    whatsapp: '#'
+  });
+
+  useEffect(() => {
+    fetchFooterData();
+  }, []);
+
+  const fetchFooterData = async () => {
+    try {
+      const { data } = await supabase
+        .from('app_config')
+        .select('*')
+        .in('key', ['contact_info', 'social_media']);
+
+      data?.forEach((config) => {
+        if (config.key === 'contact_info' && typeof config.value === 'object' && config.value !== null) {
+          setContactInfo(config.value as unknown as ContactInfo);
+        } else if (config.key === 'social_media' && typeof config.value === 'object' && config.value !== null) {
+          setSocialMedia(config.value as unknown as SocialMedia);
+        }
+      });
+    } catch (error) {
+      console.log('Fehler beim Laden der Footer-Daten:', error);
+    }
+  };
+
   return (
     <footer className="bg-gray-900 border-t border-gray-700/50 py-12 px-6">
       <div className="container mx-auto max-w-6xl">
@@ -16,13 +65,13 @@ const Footer = () => {
               Verwandeln Sie Ihr Auto in einen magischen Raum voller Sterne.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-amber-300 hover:text-amber-200 transition-colors">
+              <a href={socialMedia.facebook} className="text-amber-300 hover:text-amber-200 transition-colors">
                 📘 Facebook
               </a>
-              <a href="#" className="text-amber-300 hover:text-amber-200 transition-colors">
+              <a href={socialMedia.instagram} className="text-amber-300 hover:text-amber-200 transition-colors">
                 📷 Instagram
               </a>
-              <a href="#" className="text-amber-300 hover:text-amber-200 transition-colors">
+              <a href={socialMedia.twitter} className="text-amber-300 hover:text-amber-200 transition-colors">
                 🐦 Twitter
               </a>
             </div>
@@ -49,10 +98,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-amber-300 mb-4">Kontakt</h4>
             <div className="space-y-2 text-gray-300">
-              <p>📍 Musterstraße 123</p>
-              <p>📍 12345 Musterstadt</p>
-              <p>📞 +49 123 456 789</p>
-              <p>✉️ info@sternenhimmelauto.de</p>
+              <p>📍 {contactInfo.address}</p>
+              <p>📞 {contactInfo.phone}</p>
+              <p>✉️ {contactInfo.email}</p>
             </div>
           </div>
         </div>

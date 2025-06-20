@@ -11,12 +11,19 @@ interface HeroImage {
   position: number;
 }
 
+interface HeroPlaceholder {
+  id: string;
+  text: string;
+  position: number;
+}
+
 const Hero = () => {
   const [heroImages, setHeroImages] = useState<HeroImage[]>([]);
+  const [heroPlaceholders, setHeroPlaceholders] = useState<HeroPlaceholder[]>([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    fetchHeroImages();
+    fetchHeroContent();
   }, []);
 
   useEffect(() => {
@@ -28,19 +35,31 @@ const Hero = () => {
     }
   }, [heroImages]);
 
-  const fetchHeroImages = async () => {
+  const fetchHeroContent = async () => {
     try {
-      const { data } = await supabase
+      // Lade Hero-Bilder
+      const { data: heroData } = await supabase
         .from('app_config')
         .select('*')
         .eq('key', 'hero_images')
         .single();
       
-      if (data && data.value) {
-        setHeroImages((data.value as any) || []);
+      if (heroData && heroData.value) {
+        setHeroImages((heroData.value as any) || []);
+      }
+
+      // Lade Platzhalter-Konfiguration
+      const { data: placeholderData } = await supabase
+        .from('app_config')
+        .select('*')
+        .eq('key', 'hero_placeholders')
+        .single();
+      
+      if (placeholderData && placeholderData.value) {
+        setHeroPlaceholders((placeholderData.value as any) || []);
       }
     } catch (error) {
-      console.log('No hero images configured yet');
+      console.log('Fehler beim Laden der Hero-Inhalte:', error);
     }
   };
 
@@ -80,14 +99,14 @@ const Hero = () => {
             </div>
           ))
         ) : (
-          // Enhanced fallback placeholders
+          // Dynamische Platzhalter
           <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-            {[1, 2, 3].map((i) => (
+            {heroPlaceholders.map((placeholder) => (
               <div
-                key={i}
+                key={placeholder.id}
                 className="bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-lg opacity-20 flex items-center justify-center text-gray-500 text-sm font-medium"
               >
-                Bild {i} Platzhalter
+                {placeholder.text}
               </div>
             ))}
           </div>

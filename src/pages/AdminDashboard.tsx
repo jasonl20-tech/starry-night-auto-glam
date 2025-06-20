@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Settings, Image, FileText, HelpCircle, DollarSign, Users, Phone, Camera, Upload } from 'lucide-react';
+import { Settings, Image, FileText, HelpCircle, DollarSign, Users, Phone, Camera, Upload, Layout } from 'lucide-react';
 import BlogManager from '@/components/admin/BlogManager';
 import FAQManager from '@/components/admin/FAQManager';
 import PricingManager from '@/components/admin/PricingManager';
@@ -14,6 +14,7 @@ import ContactManager from '@/components/admin/ContactManager';
 import UserManager from '@/components/admin/UserManager';
 import HeroImageManager from '@/components/admin/HeroImageManager';
 import ImageUploadManager from '@/components/admin/ImageUploadManager';
+import HeroPlaceholderManager from '@/components/admin/HeroPlaceholderManager';
 import Navbar from '@/components/Navbar';
 
 const AdminDashboard = () => {
@@ -36,7 +37,7 @@ const AdminDashboard = () => {
         <div className="p-4 sm:p-6">
           <Tabs defaultValue="uploads" className="space-y-6">
             <div className="overflow-x-auto">
-              <TabsList className="grid w-full grid-cols-8 bg-gray-800 min-w-max">
+              <TabsList className="grid w-full grid-cols-9 bg-gray-800 min-w-max">
                 <TabsTrigger value="uploads" className="flex items-center gap-2 px-2 sm:px-4">
                   <Upload className="w-4 h-4" />
                   <span className="hidden sm:inline">Uploads</span>
@@ -44,6 +45,10 @@ const AdminDashboard = () => {
                 <TabsTrigger value="hero" className="flex items-center gap-2 px-2 sm:px-4">
                   <Camera className="w-4 h-4" />
                   <span className="hidden sm:inline">Hero</span>
+                </TabsTrigger>
+                <TabsTrigger value="placeholders" className="flex items-center gap-2 px-2 sm:px-4">
+                  <Layout className="w-4 h-4" />
+                  <span className="hidden sm:inline">Platzhalter</span>
                 </TabsTrigger>
                 <TabsTrigger value="gallery" className="flex items-center gap-2 px-2 sm:px-4">
                   <Image className="w-4 h-4" />
@@ -78,6 +83,10 @@ const AdminDashboard = () => {
 
             <TabsContent value="hero">
               <HeroImageManager />
+            </TabsContent>
+
+            <TabsContent value="placeholders">
+              <HeroPlaceholderManager />
             </TabsContent>
 
             <TabsContent value="gallery">
