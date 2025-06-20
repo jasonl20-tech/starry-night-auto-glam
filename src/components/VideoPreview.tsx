@@ -31,7 +31,7 @@ const VideoPreview = () => {
         .single();
 
       if (data && data.value) {
-        setVideoConfig(data.value as VideoConfig);
+        setVideoConfig(data.value as unknown as VideoConfig);
       }
     } catch (error) {
       console.log('Fehler beim Laden der Video-Konfiguration:', error);
