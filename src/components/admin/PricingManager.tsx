@@ -7,6 +7,9 @@ import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { Pencil, Save, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { Database } from '@/integrations/supabase/types';
+
+type PricingConfigRow = Database['public']['Tables']['pricing_config']['Row'];
 
 interface PricingConfig {
   id: string;
@@ -15,8 +18,8 @@ interface PricingConfig {
     value: number;
     currency?: string;
   };
-  description: string;
-  updated_at: string;
+  description: string | null;
+  updated_at: string | null;
 }
 
 const PricingManager = () => {
@@ -28,16 +31,19 @@ const PricingManager = () => {
   const loadPricingConfig = async () => {
     try {
       const { data, error } = await supabase
-        .from('site_config')
+        .from('pricing_config')
         .select('*')
-        .like('key', 'pricing_%');
+        .order('key');
 
       if (error) throw error;
 
       // Transform the data to match our interface
-      const transformedData: PricingConfig[] = data.map(item => ({
-        ...item,
-        value: typeof item.value === 'object' && item.value !== null 
+      const transformedData: PricingConfig[] = (data || []).map((item: PricingConfigRow) => ({
+        id: item.id,
+        key: item.key,
+        description: item.description,
+        updated_at: item.updated_at,
+        value: typeof item.value === 'object' && item.value !== null && 'value' in item.value
           ? item.value as { value: number; currency?: string }
           : { value: 0, currency: 'EUR' }
       }));
@@ -72,7 +78,7 @@ const PricingManager = () => {
       };
 
       const { error } = await supabase
-        .from('site_config')
+        .from('pricing_config')
         .update({ 
           value: newValue,
           updated_at: new Date().toISOString()
@@ -107,7 +113,9 @@ const PricingManager = () => {
         {pricingConfig.map((item) => (
           <div key={item.id} className="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
             <div className="flex-1">
-              <Label className="text-gray-300 block mb-2">{item.description}</Label>
+              <Label className="text-gray-300 block mb-2">
+                {item.description || item.key}
+              </Label>
               {editingId === item.id ? (
                 <div className="flex gap-2 items-center">
                   <Input
@@ -182,7 +190,7 @@ const PricingManager = () => {
           <div className="text-center text-gray-400 py-8">
             Keine Preiskonfiguration gefunden. 
             <br />
-            Erstellen Sie zuerst Einträge in der site_config Tabelle mit keys wie 'pricing_basic', 'pricing_premium', etc.
+            Erstellen Sie zuerst Einträge in der pricing_config Tabelle.
           </div>
         )}
       </CardContent>
