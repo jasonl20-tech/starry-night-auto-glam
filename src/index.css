@@ -150,7 +150,7 @@
     transition: all 0.3s ease;
     pointer-events: none;
   }
-</lov-components>
+}
 
 /* Enhanced animations */
 @keyframes fade-in-up {
