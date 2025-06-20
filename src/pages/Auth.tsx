@@ -20,34 +20,59 @@ const Auth = () => {
 
   useEffect(() => {
     if (user) {
+      console.log('User authenticated, redirecting to home');
       navigate('/');
     }
   }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      toast.error('Bitte E-Mail und Passwort eingeben');
+      return;
+    }
+
     setIsLoading(true);
+    console.log('Form submitted:', { isLogin, email });
 
     try {
       if (isLogin) {
+        console.log('Attempting login...');
         const { error } = await signIn(email, password);
         if (error) {
-          toast.error('Anmeldung fehlgeschlagen: ' + error.message);
+          console.error('Login error:', error);
+          if (error.message.includes('Invalid login credentials')) {
+            toast.error('Ungültige Anmeldedaten. Bitte überprüfen Sie E-Mail und Passwort.');
+          } else {
+            toast.error('Anmeldung fehlgeschlagen: ' + error.message);
+          }
         } else {
+          console.log('Login successful');
           toast.success('Erfolgreich angemeldet!');
-          navigate('/');
+          // Navigation wird durch useEffect ausgelöst
         }
       } else {
+        console.log('Attempting signup...');
         const { error } = await signUp(email, password);
         if (error) {
-          toast.error('Registrierung fehlgeschlagen: ' + error.message);
+          console.error('Signup error:', error);
+          if (error.message.includes('User already registered')) {
+            toast.error('Benutzer bereits registriert. Versuchen Sie sich anzumelden.');
+            setIsLogin(true);
+          } else {
+            toast.error('Registrierung fehlgeschlagen: ' + error.message);
+          }
         } else {
+          console.log('Signup successful');
           toast.success('Registrierung erfolgreich! Sie können sich jetzt anmelden.');
           setIsLogin(true);
+          setPassword(''); // Passwort leeren für die Anmeldung
         }
       }
     } catch (error) {
-      toast.error('Ein Fehler ist aufgetreten');
+      console.error('Auth error:', error);
+      toast.error('Ein unerwarteter Fehler ist aufgetreten');
     } finally {
       setIsLoading(false);
     }
@@ -114,6 +139,7 @@ const Auth = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
+                      minLength={6}
                       className="bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400/20 h-12 pr-12"
                       placeholder="••••••••"
                     />
@@ -125,6 +151,9 @@ const Auth = () => {
                       {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                     </button>
                   </div>
+                  {!isLogin && (
+                    <p className="text-xs text-gray-400">Mindestens 6 Zeichen</p>
+                  )}
                 </div>
                 <Button
                   type="submit"
@@ -134,7 +163,7 @@ const Auth = () => {
                   {isLoading ? (
                     <div className="flex items-center">
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                      Lädt...
+                      {isLogin ? 'Anmelden...' : 'Registrieren...'}
                     </div>
                   ) : (
                     isLogin ? 'Anmelden' : 'Registrieren'
@@ -145,7 +174,10 @@ const Auth = () => {
               <div className="text-center">
                 <button
                   type="button"
-                  onClick={() => setIsLogin(!isLogin)}
+                  onClick={() => {
+                    setIsLogin(!isLogin);
+                    setPassword(''); // Passwort leeren beim Wechsel
+                  }}
                   className="text-amber-400 hover:text-amber-300 text-sm font-medium transition-colors"
                 >
                   {isLogin ? 'Noch kein Konto? Jetzt registrieren' : 'Bereits ein Konto? Jetzt anmelden'}
