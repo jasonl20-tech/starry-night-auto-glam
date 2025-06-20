@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -77,8 +76,8 @@ export default {
 				}
 			},
 			fontFamily: {
-				'orbitron': ['Orbitron', 'monospace'],
-				'rajdhani': ['Rajdhani', 'sans-serif'],
+				'space-grotesk': ['Space Grotesk', 'sans-serif'],
+				'poppins': ['Poppins', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

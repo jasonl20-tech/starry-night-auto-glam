@@ -27,10 +27,10 @@ const About = () => {
   ];
 
   return (
-    <section className="py-20 px-6 bg-gray-900/30">
+    <section className="py-20 px-6 bg-gray-900/20">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-orbitron font-bold text-gold-400 mb-6">
+          <h2 className="text-4xl md:text-5xl font-space-grotesk font-bold text-gold-400 mb-6">
             WARUM AUTO STERNENHIMMEL?
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -41,12 +41,12 @@ const About = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-black/50 border-gold-400/30 hover:border-gold-400/60 transition-all duration-300 group">
+            <Card key={index} className="bg-black/30 border-gold-400/30 hover:border-gold-400/60 transition-all duration-300 group">
               <CardContent className="p-6 text-center">
                 <div className="text-4xl mb-4 group-hover:animate-bounce">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-orbitron font-bold text-gold-400 mb-3">
+                <h3 className="text-xl font-space-grotesk font-bold text-gold-400 mb-3">
                   {feature.title}
                 </h3>
                 <p className="text-gray-300 text-sm leading-relaxed">

@@ -45,11 +45,14 @@
   }
 
   body {
-    @apply bg-background text-foreground font-rajdhani;
+    @apply bg-background text-foreground font-poppins;
+    background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #0f0f0f, #151515);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-orbitron;
+    @apply font-space-grotesk;
   }
 }
 
@@ -68,5 +71,48 @@
   
   .bg-gold {
     background-color: #ffd700;
+  }
+
+  .floating-particles {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .floating-particles::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255, 215, 0, 0.2), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
+      radial-gradient(1px 1px at 130px 80px, rgba(255, 215, 0, 0.3), transparent);
+    background-size: 200px 100px;
+    animation: floatingParticles 20s linear infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatingParticles {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
   }
 }
