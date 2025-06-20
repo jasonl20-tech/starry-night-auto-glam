@@ -15,19 +15,21 @@ import LiveChat from '@/components/LiveChat';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
+    <div className="min-h-screen bg-gray-900 text-gray-100 overflow-x-hidden">
       <Navbar />
       <LiveChat />
-      <main>
+      <main className="w-full">
         <Hero />
-        <SocialProof />
-        <About />
-        <GalleryPreview />
-        <PriceCalculator />
-        <Testimonials />
-        <FAQ />
-        <BlogPreview />
-        <Newsletter />
+        <div className="px-4 sm:px-6 lg:px-8">
+          <SocialProof />
+          <About />
+          <GalleryPreview />
+          <PriceCalculator />
+          <Testimonials />
+          <FAQ />
+          <BlogPreview />
+          <Newsletter />
+        </div>
       </main>
       <Footer />
     </div>

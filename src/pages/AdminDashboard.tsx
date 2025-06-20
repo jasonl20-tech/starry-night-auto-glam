@@ -5,13 +5,14 @@ import { Navigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { Settings, Image, FileText, HelpCircle, DollarSign, Users, Phone } from 'lucide-react';
+import { Settings, Image, FileText, HelpCircle, DollarSign, Users, Phone, Camera } from 'lucide-react';
 import BlogManager from '@/components/admin/BlogManager';
 import FAQManager from '@/components/admin/FAQManager';
 import PricingManager from '@/components/admin/PricingManager';
 import GalleryManager from '@/components/admin/GalleryManager';
 import ContactManager from '@/components/admin/ContactManager';
 import UserManager from '@/components/admin/UserManager';
+import HeroImageManager from '@/components/admin/HeroImageManager';
 
 const AdminDashboard = () => {
   const { user, isAdmin, signOut } = useAuth();
@@ -22,47 +23,57 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <div className="border-b border-gray-700 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-amber-300">Admin Dashboard</h1>
+      <div className="border-b border-gray-700 px-4 sm:px-6 py-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-amber-300">Admin Dashboard</h1>
           <Button
             onClick={signOut}
             variant="outline"
-            className="border-gray-600 text-gray-300 hover:bg-gray-800"
+            className="border-gray-600 text-gray-300 hover:bg-gray-800 w-full sm:w-auto"
           >
             Abmelden
           </Button>
         </div>
       </div>
 
-      <div className="p-6">
-        <Tabs defaultValue="gallery" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6 bg-gray-800">
-            <TabsTrigger value="gallery" className="flex items-center gap-2">
-              <Image className="w-4 h-4" />
-              Galerie
-            </TabsTrigger>
-            <TabsTrigger value="blog" className="flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              Blog
-            </TabsTrigger>
-            <TabsTrigger value="pricing" className="flex items-center gap-2">
-              <DollarSign className="w-4 h-4" />
-              Preise
-            </TabsTrigger>
-            <TabsTrigger value="faq" className="flex items-center gap-2">
-              <HelpCircle className="w-4 h-4" />
-              FAQ
-            </TabsTrigger>
-            <TabsTrigger value="contact" className="flex items-center gap-2">
-              <Phone className="w-4 h-4" />
-              Kontakt
-            </TabsTrigger>
-            <TabsTrigger value="users" className="flex items-center gap-2">
-              <Users className="w-4 h-4" />
-              Nutzer
-            </TabsTrigger>
-          </TabsList>
+      <div className="p-4 sm:p-6">
+        <Tabs defaultValue="hero" className="space-y-6">
+          <div className="overflow-x-auto">
+            <TabsList className="grid w-full grid-cols-7 bg-gray-800 min-w-max">
+              <TabsTrigger value="hero" className="flex items-center gap-2 px-2 sm:px-4">
+                <Camera className="w-4 h-4" />
+                <span className="hidden sm:inline">Hero</span>
+              </TabsTrigger>
+              <TabsTrigger value="gallery" className="flex items-center gap-2 px-2 sm:px-4">
+                <Image className="w-4 h-4" />
+                <span className="hidden sm:inline">Galerie</span>
+              </TabsTrigger>
+              <TabsTrigger value="blog" className="flex items-center gap-2 px-2 sm:px-4">
+                <FileText className="w-4 h-4" />
+                <span className="hidden sm:inline">Blog</span>
+              </TabsTrigger>
+              <TabsTrigger value="pricing" className="flex items-center gap-2 px-2 sm:px-4">
+                <DollarSign className="w-4 h-4" />
+                <span className="hidden sm:inline">Preise</span>
+              </TabsTrigger>
+              <TabsTrigger value="faq" className="flex items-center gap-2 px-2 sm:px-4">
+                <HelpCircle className="w-4 h-4" />
+                <span className="hidden sm:inline">FAQ</span>
+              </TabsTrigger>
+              <TabsTrigger value="contact" className="flex items-center gap-2 px-2 sm:px-4">
+                <Phone className="w-4 h-4" />
+                <span className="hidden sm:inline">Kontakt</span>
+              </TabsTrigger>
+              <TabsTrigger value="users" className="flex items-center gap-2 px-2 sm:px-4">
+                <Users className="w-4 h-4" />
+                <span className="hidden sm:inline">Nutzer</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <TabsContent value="hero">
+            <HeroImageManager />
+          </TabsContent>
 
           <TabsContent value="gallery">
             <GalleryManager />

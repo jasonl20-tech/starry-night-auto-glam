@@ -1,9 +1,14 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { Menu, X, User } from 'lucide-react';
 
 const Navbar = () => {
   const location = useLocation();
+  const { user, signOut } = useAuth();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -12,15 +17,21 @@ const Navbar = () => {
     { name: 'Kontakt', path: '/kontakt' }
   ];
 
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-40 border-b border-gray-700/50">
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-white">
+          <Link to="/" className="text-lg sm:text-2xl font-bold text-white">
             ⭐ STERNENHIMMELAUTO
           </Link>
           
-          <div className="hidden md:flex space-x-8">
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex space-x-6 xl:space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -35,13 +46,100 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
+
+          {/* Desktop Auth Section */}
+          <div className="hidden lg:flex items-center space-x-4">
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <Link to="/admin">
+                  <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-800">
+                    <User className="w-4 h-4 mr-2" />
+                    Admin
+                  </Button>
+                </Link>
+                <Button 
+                  onClick={handleSignOut}
+                  variant="outline" 
+                  size="sm"
+                  className="border-gray-600 text-gray-300 hover:bg-gray-800"
+                >
+                  Abmelden
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button 
+                  size="sm"
+                  className="unified-button-gradient hover:unified-button-hover text-white border border-gray-600/50"
+                >
+                  Anmelden
+                </Button>
+              </Link>
+            )}
+          </div>
           
-          <div className="md:hidden">
-            <button className="text-amber-300">
-              ☰
+          {/* Mobile Menu Button */}
+          <div className="lg:hidden">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-amber-300 p-2"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden mt-4 pb-4 border-t border-gray-700/50">
+            <div className="flex flex-col space-y-3 pt-4">
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`font-medium transition-colors hover:text-amber-300 py-2 ${
+                    location.pathname === item.path 
+                      ? 'text-amber-300' 
+                      : 'text-white'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              
+              <div className="pt-3 border-t border-gray-700/50">
+                {user ? (
+                  <div className="flex flex-col space-y-3">
+                    <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="outline" size="sm" className="w-full border-gray-600 text-gray-300 hover:bg-gray-800">
+                        <User className="w-4 h-4 mr-2" />
+                        Admin
+                      </Button>
+                    </Link>
+                    <Button 
+                      onClick={handleSignOut}
+                      variant="outline" 
+                      size="sm"
+                      className="w-full border-gray-600 text-gray-300 hover:bg-gray-800"
+                    >
+                      Abmelden
+                    </Button>
+                  </div>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button 
+                      size="sm"
+                      className="w-full unified-button-gradient hover:unified-button-hover text-white border border-gray-600/50"
+                    >
+                      Anmelden
+                    </Button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
