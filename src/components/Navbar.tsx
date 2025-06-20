@@ -13,11 +13,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-midnight-900/90 backdrop-blur-sm z-40 border-b border-stellar-400/20">
+    <nav className="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm z-40 border-b border-gray-700/50">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-space-grotesk font-bold text-stellar-300">
-            ⭐ AUTO STERNENHIMMEL
+          <Link to="/" className="text-2xl font-bold text-white">
+            ⭐ STERNENHIMMELAUTO
           </Link>
           
           <div className="hidden md:flex space-x-8">
@@ -25,9 +25,9 @@ const Navbar = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`font-poppins font-medium transition-colors hover:text-stellar-300 ${
+                className={`font-medium transition-colors hover:text-amber-300 ${
                   location.pathname === item.path 
-                    ? 'text-stellar-300' 
+                    ? 'text-amber-300' 
                     : 'text-white'
                 }`}
               >
@@ -37,7 +37,7 @@ const Navbar = () => {
           </div>
           
           <div className="md:hidden">
-            <button className="text-stellar-300">
+            <button className="text-amber-300">
               ☰
             </button>
           </div>
