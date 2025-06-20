@@ -48,10 +48,10 @@ const ContactManager = () => {
       toast.error('Fehler beim Laden der Kontaktdaten');
     } else {
       data?.forEach((config) => {
-        if (config.key === 'contact_info') {
-          setContactInfo(config.value);
-        } else if (config.key === 'social_media') {
-          setSocialMedia(config.value);
+        if (config.key === 'contact_info' && typeof config.value === 'object' && config.value !== null) {
+          setContactInfo(config.value as ContactInfo);
+        } else if (config.key === 'social_media' && typeof config.value === 'object' && config.value !== null) {
+          setSocialMedia(config.value as SocialMedia);
         }
       });
     }
@@ -62,7 +62,7 @@ const ContactManager = () => {
       .from('app_config')
       .upsert({
         key: 'contact_info',
-        value: contactInfo,
+        value: contactInfo as any,
         description: 'Kontaktinformationen',
         updated_at: new Date().toISOString()
       });
@@ -79,7 +79,7 @@ const ContactManager = () => {
       .from('app_config')
       .upsert({
         key: 'social_media',
-        value: socialMedia,
+        value: socialMedia as any,
         description: 'Social Media Links',
         updated_at: new Date().toISOString()
       });

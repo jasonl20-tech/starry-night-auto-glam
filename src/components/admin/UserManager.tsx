@@ -15,6 +15,10 @@ interface UserProfile {
   role: string;
 }
 
+interface UserRole {
+  role: string;
+}
+
 const UserManager = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +47,7 @@ const UserManager = () => {
         email: user.email,
         full_name: user.full_name,
         created_at: user.created_at,
-        role: user.user_roles?.[0]?.role || 'user'
+        role: (user.user_roles as UserRole[])?.[0]?.role || 'user'
       })) || [];
 
       setUsers(formattedUsers);
