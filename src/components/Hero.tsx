@@ -4,88 +4,52 @@ import { Button } from '@/components/ui/button';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Verbesserte animierte Sterne */}
-      <div className="absolute inset-0">
-        {[...Array(100)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-stellar-300 rounded-full animate-twinkle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Schwebende Galaxie-Elemente */}
-      <div className="absolute inset-0">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute text-4xl opacity-20 animate-float"
-            style={{
-              left: `${Math.random() * 90}%`,
-              top: `${Math.random() * 90}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animationDuration: `${6 + Math.random() * 4}s`
-            }}
-          >
-            {['🌌', '✨', '💫', '⭐', '🌟'][Math.floor(Math.random() * 5)]}
-          </div>
-        ))}
-      </div>
-      
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        <div className="animate-fade-in-up">
-          <h1 className="text-6xl md:text-8xl font-space-grotesk font-black mb-6 text-stellar-300 animate-pulse-glow">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
+      <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gray-900 leading-tight">
             AUTO STERNENHIMMEL
           </h1>
-          <h2 className="text-3xl md:text-4xl font-poppins font-medium mb-8 text-white animate-slide-in-right">
-            Verwandeln Sie Ihr Fahrzeug in einen luxuriösen Raum voller Sterne
+          <h2 className="text-2xl md:text-3xl font-medium mb-8 text-gray-700 max-w-4xl mx-auto">
+            Professioneller Einbau von Premium-Sternenhimmeln für Ihr Fahrzeug
           </h2>
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto animate-fade-in">
-            ⭐ Über 1000+ zufriedene Kunden ⭐<br/>
-            Professioneller Einbau von Sternenhimmeln direkt in Ihr Auto. 
-            Erleben Sie jeden Fahrt wie eine Reise durch das Universum.
+          <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Über 1000+ zufriedene Kunden vertrauen auf unsere Expertise. 
+            Verwandeln Sie Ihr Fahrzeug mit hochwertigen Glasfasern in einen luxuriösen Raum.
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-6 justify-center animate-bounce-in">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
           <Button 
             size="lg" 
-            className="bg-stellar-500 hover:bg-stellar-600 text-midnight-900 font-poppins font-bold text-xl px-12 py-6 transform hover:scale-105 transition-all duration-300 shadow-lg animate-pulse-subtle"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg px-12 py-4 rounded-lg shadow-lg"
           >
-            🚗 JETZT KOSTENLOS BERATEN LASSEN
+            Kostenlose Beratung
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-2 border-stellar-400 text-stellar-300 hover:bg-stellar-400 hover:text-midnight-900 font-poppins font-bold text-xl px-12 py-6 transform hover:scale-105 transition-all duration-300"
+            className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold text-lg px-12 py-4 rounded-lg"
           >
-            📱 WhatsApp Kontakt
+            Kontakt aufnehmen
           </Button>
         </div>
 
-        {/* Vertrauen schaffende Elemente */}
-        <div className="mt-16 grid md:grid-cols-3 gap-8 text-center animate-fade-in">
-          <div className="text-stellar-300">
-            <div className="text-4xl mb-2">⚡</div>
-            <div className="text-2xl font-bold">2 Stunden</div>
-            <div className="text-lg">Schneller Einbau</div>
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm border">
+            <div className="text-3xl font-bold text-blue-600 mb-2">2 Stunden</div>
+            <div className="text-lg font-medium text-gray-900 mb-2">Schneller Einbau</div>
+            <div className="text-gray-600">Professionelle Installation</div>
           </div>
-          <div className="text-stellar-300">
-            <div className="text-4xl mb-2">🛡️</div>
-            <div className="text-2xl font-bold">5 Jahre</div>
-            <div className="text-lg">Garantie</div>
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm border">
+            <div className="text-3xl font-bold text-blue-600 mb-2">5 Jahre</div>
+            <div className="text-lg font-medium text-gray-900 mb-2">Garantie</div>
+            <div className="text-gray-600">Vollumfänglicher Schutz</div>
           </div>
-          <div className="text-stellar-300">
-            <div className="text-4xl mb-2">⭐</div>
-            <div className="text-2xl font-bold">4.9/5</div>
-            <div className="text-lg">Kundenbewertung</div>
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm border">
+            <div className="text-3xl font-bold text-blue-600 mb-2">4.9/5</div>
+            <div className="text-lg font-medium text-gray-900 mb-2">Kundenbewertung</div>
+            <div className="text-gray-600">Über 1000 Bewertungen</div>
           </div>
         </div>
       </div>

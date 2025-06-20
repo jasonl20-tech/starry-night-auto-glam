@@ -5,9 +5,7 @@ import Hero from '@/components/Hero';
 import GalleryPreview from '@/components/GalleryPreview';
 import CarSelector from '@/components/CarSelector';
 import About from '@/components/About';
-import BeforeAfter from '@/components/BeforeAfter';
 import PriceCalculator from '@/components/PriceCalculator';
-import ComparisonTable from '@/components/ComparisonTable';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import SocialProof from '@/components/SocialProof';
@@ -16,26 +14,22 @@ import BlogPreview from '@/components/BlogPreview';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
 import LiveChat from '@/components/LiveChat';
-import ScrollAnimations from '@/components/ScrollAnimations';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-gray-900">
       <Navbar />
-      <ScrollAnimations />
       <LiveChat />
-      <main className="pt-20">
+      <main>
         <Hero />
         <SocialProof />
+        <About />
         <GalleryPreview />
         <CarSelector />
-        <About />
-        <BeforeAfter />
         <PriceCalculator />
-        <ComparisonTable />
         <Testimonials />
-        <UrgencyBanner />
         <FAQ />
+        <UrgencyBanner />
         <BlogPreview />
         <Newsletter />
       </main>

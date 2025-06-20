@@ -7,70 +7,63 @@ const SocialProof = () => {
     {
       number: '1000+',
       label: 'Zufriedene Kunden',
-      icon: '😊'
     },
     {
       number: '50+',
       label: 'Fahrzeugmodelle',
-      icon: '🚗'
     },
     {
-      number: '5★',
+      number: '4.9★',
       label: 'Durchschnittsbewertung',
-      icon: '⭐'
     },
     {
       number: '2h',
       label: 'Durchschnittliche Einbauzeit',
-      icon: '⚡'
     }
   ];
 
-  const socialFeatures = [
-    '📱 Über 500 Instagram Posts von Kunden',
-    '🎥 YouTube Kanal mit 10k+ Abonnenten', 
-    '👥 Facebook Community mit 2k+ Mitgliedern',
-    '📰 Erwähnt in AutoBild & Motor1',
-    '🏆 Testsieger bei Vergleich.org',
-    '💎 Premium Partner von Mercedes & BMW'
+  const certifications = [
+    'TÜV-geprüfte Qualität',
+    'Zertifizierte Fachbetrieb', 
+    'Handwerkskammer-Mitglied',
+    'Versicherungsschutz',
+    '5 Jahre Garantie',
+    'Kostenlose Beratung'
   ];
 
   return (
-    <section className="py-20 px-6">
+    <section className="py-20 px-6 bg-white">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-space-grotesk font-bold text-stellar-300 mb-6">
-            📊 VERTRAUEN SIE DEN ZAHLEN
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            Vertrauen Sie unserer Expertise
           </h2>
-          <p className="text-xl text-gray-300">
-            Tausende zufriedene Kunden können nicht irren
+          <p className="text-xl text-gray-600">
+            Über 1000 zufriedene Kunden und höchste Qualitätsstandards
           </p>
         </div>
 
-        {/* Stats Grid */}
         <div className="grid md:grid-cols-4 gap-6 mb-16">
           {stats.map((stat, index) => (
-            <Card key={index} className="bg-midnight-800/30 border-stellar-400/20 text-center transform hover:scale-105 transition-all duration-300">
+            <Card key={index} className="bg-white border text-center shadow-sm">
               <CardContent className="p-6">
-                <div className="text-4xl mb-2">{stat.icon}</div>
-                <div className="text-3xl font-bold text-stellar-300 mb-2">{stat.number}</div>
-                <div className="text-gray-300">{stat.label}</div>
+                <div className="text-3xl font-bold text-blue-600 mb-2">{stat.number}</div>
+                <div className="text-gray-600">{stat.label}</div>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Social Features */}
-        <Card className="bg-midnight-800/30 border-stellar-400/20">
+        <Card className="bg-gray-50 border">
           <CardContent className="p-8">
-            <h3 className="text-2xl font-space-grotesk font-bold text-stellar-300 mb-6 text-center">
-              🌟 Auszeichnungen & Anerkennung
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+              Qualität & Sicherheit
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
-              {socialFeatures.map((feature, index) => (
-                <div key={index} className="flex items-center text-gray-300">
-                  <span className="text-stellar-400 mr-3">✓</span>
-                  {feature}
+              {certifications.map((cert, index) => (
+                <div key={index} className="flex items-center text-gray-700">
+                  <span className="text-green-600 mr-3">✓</span>
+                  {cert}
                 </div>
               ))}
             </div>
