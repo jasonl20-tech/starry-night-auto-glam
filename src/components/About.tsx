@@ -30,51 +30,51 @@ const About = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-gray-800/50">
+    <section className="py-8 sm:py-12 lg:py-20 px-3 sm:px-4 lg:px-6 bg-gray-800/50 hidden md:block">
       <div className="container mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
               WARUM AUTO-STERNENHIMMEL?
             </h2>
-            <div className="w-24 h-1 gold-accent mb-6"></div>
+            <div className="w-16 sm:w-20 lg:w-24 h-0.5 sm:h-1 gold-accent mb-4 sm:mb-6"></div>
             
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed">
               Verwandeln Sie Ihr Fahrzeug in einen magischen Raum voller Sterne. 
               Unsere hochwertigen Glasfaser-Installationen schaffen eine einzigartige 
               Atmosphäre für jeden Anlass.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 mb-8">
+            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
               <div className="flex items-start space-x-3">
-                <CheckCircle className="w-6 h-6 text-green-400 mt-1 flex-shrink-0" />
+                <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-400 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">Premium Qualität</h3>
-                  <p className="text-gray-300 text-sm">Hochwertige Glasfasern für langanhaltende Schönheit</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Premium Qualität</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">Hochwertige Glasfasern für langanhaltende Schönheit</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
-                <Star className="w-6 h-6 text-amber-400 mt-1 flex-shrink-0" />
+                <Star className="w-5 h-5 sm:w-6 sm:h-6 text-amber-400 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">Professioneller Einbau</h3>
-                  <p className="text-gray-300 text-sm">Erfahrene Techniker für perfekte Resultate</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Professioneller Einbau</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">Erfahrene Techniker für perfekte Resultate</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
-                <Award className="w-6 h-6 text-blue-400 mt-1 flex-shrink-0" />
+                <Award className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">5 Jahre Garantie</h3>
-                  <p className="text-gray-300 text-sm">Vollumfänglicher Schutz Ihrer Investition</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">5 Jahre Garantie</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">Vollumfänglicher Schutz Ihrer Investition</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
-                <Users className="w-6 h-6 text-purple-400 mt-1 flex-shrink-0" />
+                <Users className="w-5 h-5 sm:w-6 sm:h-6 text-purple-400 mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">1000+ Kunden</h3>
-                  <p className="text-gray-300 text-sm">Zufriedene Kunden deutschlandweit</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">1000+ Kunden</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">Zufriedene Kunden deutschlandweit</p>
                 </div>
               </div>
             </div>
