@@ -8,7 +8,6 @@ import PriceCalculator from '@/components/PriceCalculator';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import SocialProof from '@/components/SocialProof';
-import UrgencyBanner from '@/components/UrgencyBanner';
 import BlogPreview from '@/components/BlogPreview';
 import Newsletter from '@/components/Newsletter';
 import Footer from '@/components/Footer';
@@ -27,7 +26,6 @@ const Index = () => {
         <PriceCalculator />
         <Testimonials />
         <FAQ />
-        <UrgencyBanner />
         <BlogPreview />
         <Newsletter />
       </main>

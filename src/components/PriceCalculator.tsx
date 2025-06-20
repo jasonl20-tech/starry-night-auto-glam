@@ -17,10 +17,6 @@ const PriceCalculator = () => {
   const sparklePrice = sparkleEffect ? 50 : 0;
   const totalAddOns = shootingStarsPrice + sparklePrice;
   const totalPrice = basePrice + totalAddOns;
-  
-  const originalPrice = totalPrice * 1.3;
-  const discount = originalPrice - totalPrice;
-  const discountPercentage = Math.round((discount / originalPrice) * 100);
 
   // Scroll Animation
   useEffect(() => {
@@ -60,106 +56,108 @@ const PriceCalculator = () => {
   return (
     <section 
       ref={sectionRef}
-      className={`py-20 px-6 bg-gray-900 transition-all duration-1000 ${
+      className={`py-20 px-6 unified-section-bg transition-all duration-1000 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
     >
-      <div className="container mx-auto max-w-4xl">
-        <div className={`text-center mb-12 transition-all duration-700 delay-200 ${
+      <div className="container mx-auto max-w-5xl">
+        <div className={`text-center mb-16 transition-all duration-700 delay-200 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             PREIS KALKULATOR
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-yellow-600 mx-auto mb-6"></div>
-          <p className="text-xl text-gray-300">
+          <div className="w-24 h-1 unified-gold-gradient mx-auto mb-8"></div>
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             Berechnen Sie den Preis für Ihren individuellen Sternenhimmel
           </p>
         </div>
 
-        <Card className={`bg-gray-800/90 border-gray-700 backdrop-blur-sm transition-all duration-700 delay-400 hover:bg-gray-800 hover:scale-[1.01] ${
+        <Card className={`unified-card-enhanced border-gray-600/50 backdrop-blur-sm transition-all duration-700 delay-400 hover:border-gray-500/70 hover:scale-[1.01] shadow-2xl ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-white text-center">
+          <CardHeader className="pb-8">
+            <CardTitle className="text-3xl font-bold text-white text-center">
               Wählen Sie die Anzahl der Sterne
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-8">
-            <div className="space-y-4">
+          <CardContent className="space-y-10">
+            <div className="space-y-6">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold text-gray-200">Anzahl Sterne:</span>
-                <span className="text-2xl font-bold text-amber-400">
+                <span className="text-xl font-semibold text-gray-100">Anzahl Sterne:</span>
+                <span className="text-3xl font-bold text-amber-300">
                   {stars[0]}
                 </span>
               </div>
               
-              <Slider
-                value={stars}
-                onValueChange={setStars}
-                max={1200}
-                min={300}
-                step={100}
-                className="w-full"
-              />
+              <div className="px-4">
+                <Slider
+                  value={stars}
+                  onValueChange={setStars}
+                  max={1200}
+                  min={300}
+                  step={100}
+                  className="w-full"
+                />
+              </div>
               
-              <div className="flex justify-between text-sm text-gray-400">
+              <div className="flex justify-between text-sm text-gray-400 px-4">
                 <span>300 Sterne</span>
                 <span>1200 Sterne</span>
               </div>
               
-              <div className="text-center text-gray-200 bg-gray-700/50 rounded-lg p-4">
-                <span className="text-lg font-semibold">Grundpreis: €{basePrice.toFixed(0)}</span>
-                <p className="text-sm text-gray-400 mt-1">100 Sterne = €200</p>
+              <div className="text-center unified-price-card rounded-xl p-6 border border-gray-600/50">
+                <span className="text-2xl font-bold text-white">Grundpreis: €{basePrice.toFixed(0)}</span>
+                <p className="text-sm text-gray-300 mt-2">100 Sterne = €200</p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-white text-center">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-white text-center">
                 Zusatzoptionen
               </h3>
               
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-6">
                 {addOnOptions.map((option, index) => (
                   <Card 
                     key={option.name} 
-                    className={`bg-gray-700/50 border-gray-600 hover:bg-gray-700/70 hover:border-gray-500 transition-all duration-300 hover:scale-105 ${
+                    className={`unified-addon-card border-gray-600/50 hover:border-gray-500/70 transition-all duration-300 hover:scale-105 hover:shadow-lg ${
                       isVisible ? `opacity-100 translate-y-0 delay-[${600 + index * 100}ms]` : 'opacity-0 translate-y-4'
                     }`}
                   >
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-3 mb-3">
-                        <div className="text-3xl">{option.preview}</div>
+                    <CardContent className="p-6">
+                      <div className="flex items-center space-x-4 mb-4">
+                        <div className="text-4xl">{option.preview}</div>
                         <div className="flex-1">
-                          <h4 className="font-bold text-white">
+                          <h4 className="font-bold text-white text-lg">
                             {option.name}
                           </h4>
-                          <p className="text-sm text-amber-400 font-semibold">€{option.price}</p>
+                          <p className="text-lg text-amber-300 font-bold">€{option.price}</p>
                         </div>
                       </div>
                       
-                      <p className="text-sm text-gray-300 mb-3">
+                      <p className="text-gray-200 mb-4 leading-relaxed">
                         {option.description}
                       </p>
                       
                       <div className="flex items-center justify-between">
                         <Dialog>
                           <DialogTrigger asChild>
-                            <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors">
+                            <Button variant="outline" size="sm" className="border-gray-500 text-gray-200 hover:unified-button-gradient hover:text-white hover:border-transparent transition-all duration-300">
                               Weitere Infos
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="bg-gray-800 border-gray-700">
+                          <DialogContent className="unified-dialog-bg border-gray-600">
                             <DialogHeader>
-                              <DialogTitle className="text-white font-bold">
+                              <DialogTitle className="text-white font-bold text-xl">
                                 {option.name}
                               </DialogTitle>
                             </DialogHeader>
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                               <div className="text-center text-6xl">{option.preview}</div>
-                              <p className="text-gray-300">{option.details}</p>
+                              <p className="text-gray-200 leading-relaxed">{option.details}</p>
                               <div className="text-center">
-                                <span className="text-2xl font-bold text-amber-400">
+                                <span className="text-3xl font-bold text-amber-300">
                                   €{option.price}
                                 </span>
                               </div>
@@ -168,21 +166,21 @@ const PriceCalculator = () => {
                         </Dialog>
                         
                         {option.name === 'Sternschnuppen' ? (
-                          <div className="flex items-center space-x-2">
+                          <div className="flex items-center space-x-3">
                             <Button 
                               variant="outline" 
                               size="sm"
                               onClick={() => setShootingStars(Math.max(0, shootingStars - 1))}
-                              className="border-gray-600 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors"
+                              className="border-gray-500 text-gray-200 hover:unified-button-gradient hover:text-white hover:border-transparent transition-all duration-300"
                             >
                               -
                             </Button>
-                            <span className="text-white font-semibold px-2 min-w-[2rem] text-center">{shootingStars}</span>
+                            <span className="text-white font-bold px-3 min-w-[3rem] text-center text-lg">{shootingStars}</span>
                             <Button 
                               variant="outline" 
                               size="sm"
                               onClick={() => setShootingStars(shootingStars + 1)}
-                              className="border-gray-600 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors"
+                              className="border-gray-500 text-gray-200 hover:unified-button-gradient hover:text-white hover:border-transparent transition-all duration-300"
                             >
                               +
                             </Button>
@@ -193,8 +191,8 @@ const PriceCalculator = () => {
                             size="sm"
                             onClick={() => setSparkleEffect(!sparkleEffect)}
                             className={sparkleEffect 
-                              ? "bg-amber-500 text-black hover:bg-amber-600 font-semibold" 
-                              : "border-gray-600 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors"
+                              ? "unified-button-gradient text-white hover:unified-button-hover font-semibold" 
+                              : "border-gray-500 text-gray-200 hover:unified-button-gradient hover:text-white hover:border-transparent transition-all duration-300"
                             }
                           >
                             {sparkleEffect ? 'Ausgewählt' : 'Hinzufügen'}
@@ -207,49 +205,33 @@ const PriceCalculator = () => {
               </div>
             </div>
 
-            <div className="bg-gray-700/50 rounded-lg p-6 space-y-4 border border-gray-600">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-400 line-through">Regulärer Preis:</span>
-                <span className="text-gray-400 line-through text-xl">
-                  €{originalPrice.toFixed(0)}
-                </span>
-              </div>
-              
+            <div className="unified-final-price-card rounded-xl p-8 space-y-6 border border-gray-600/50 shadow-xl">
               {totalAddOns > 0 && (
-                <div className="flex justify-between items-center text-blue-400">
-                  <span className="font-semibold">Zusatzoptionen:</span>
-                  <span className="text-lg font-bold">€{totalAddOns.toFixed(0)}</span>
+                <div className="flex justify-between items-center text-blue-300">
+                  <span className="font-semibold text-lg">Zusatzoptionen:</span>
+                  <span className="text-xl font-bold">€{totalAddOns.toFixed(0)}</span>
                 </div>
               )}
               
-              <div className="flex justify-between items-center text-green-400">
-                <span className="font-semibold">
-                  🎉 Aktionsrabatt ({discountPercentage}%):
-                </span>
-                <span className="text-xl font-bold">
-                  -€{discount.toFixed(0)}
-                </span>
-              </div>
-              
-              <hr className="border-gray-600" />
+              <hr className="border-gray-600/50" />
               
               <div className="flex justify-between items-center">
                 <span className="text-2xl font-bold text-white">
-                  Ihr Preis:
+                  Gesamtpreis:
                 </span>
-                <span className="text-3xl font-black text-amber-400">
+                <span className="text-4xl font-black text-amber-300">
                   €{totalPrice.toFixed(0)}
                 </span>
               </div>
               
-              <p className="text-sm text-gray-400 text-center">
+              <p className="text-gray-300 text-center">
                 * Preis inkl. professionellem Einbau und Materialien
               </p>
             </div>
 
             <Button 
               size="lg" 
-              className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-black font-bold text-xl py-6 transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-xl"
+              className="w-full unified-cta-button hover:unified-cta-hover text-white font-bold text-xl py-8 transition-all duration-300 hover:scale-[1.02] shadow-xl hover:shadow-2xl"
             >
               Jetzt Termin vereinbaren - €{totalPrice.toFixed(0)}
             </Button>
