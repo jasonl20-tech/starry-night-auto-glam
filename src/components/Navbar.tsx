@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { Menu, X, User } from 'lucide-react';
+import { Menu, X, User, Settings } from 'lucide-react';
 
 const Navbar = () => {
   const location = useLocation();
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -51,12 +51,17 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-3">
-                <Link to="/admin">
-                  <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-800">
-                    <User className="w-4 h-4 mr-2" />
-                    Admin
-                  </Button>
-                </Link>
+                {isAdmin && (
+                  <Link to="/admin">
+                    <Button variant="outline" size="sm" className="border-amber-500 text-amber-300 hover:bg-amber-500/10">
+                      <Settings className="w-4 h-4 mr-2" />
+                      Admin
+                    </Button>
+                  </Link>
+                )}
+                <span className="text-gray-300 text-sm">
+                  {user.email}
+                </span>
                 <Button 
                   onClick={handleSignOut}
                   variant="outline" 
@@ -111,12 +116,17 @@ const Navbar = () => {
               <div className="pt-3 border-t border-gray-700/50">
                 {user ? (
                   <div className="flex flex-col space-y-3">
-                    <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="outline" size="sm" className="w-full border-gray-600 text-gray-300 hover:bg-gray-800">
-                        <User className="w-4 h-4 mr-2" />
-                        Admin
-                      </Button>
-                    </Link>
+                    {isAdmin && (
+                      <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                        <Button variant="outline" size="sm" className="w-full border-amber-500 text-amber-300 hover:bg-amber-500/10">
+                          <Settings className="w-4 h-4 mr-2" />
+                          Admin
+                        </Button>
+                      </Link>
+                    )}
+                    <div className="text-gray-300 text-sm">
+                      {user.email}
+                    </div>
                     <Button 
                       onClick={handleSignOut}
                       variant="outline" 
