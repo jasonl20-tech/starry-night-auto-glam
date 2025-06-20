@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
+import { Star, ArrowRight, CheckCircle } from 'lucide-react';
 
 interface HeroImage {
   id: string;
@@ -61,14 +62,14 @@ const Hero = () => {
 
   return (
     <section className="hero-section interactive-bg animated-hero relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Images */}
+      {/* Background Images with enhanced overlay */}
       <div className="absolute inset-0">
         {heroImages.length > 0 ? (
           heroImages.map((image, index) => (
             <div
               key={image.id}
               className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentImageIndex ? 'opacity-70' : 'opacity-0'
+                index === currentImageIndex ? 'opacity-40' : 'opacity-0'
               }`}
             >
               <img
@@ -79,12 +80,12 @@ const Hero = () => {
             </div>
           ))
         ) : (
-          // Fallback placeholders
+          // Enhanced fallback placeholders
           <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="image-placeholder rounded-lg opacity-20"
+                className="bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-lg opacity-20 flex items-center justify-center text-gray-500 text-sm font-medium"
               >
                 Bild {i} Platzhalter
               </div>
@@ -93,55 +94,91 @@ const Hero = () => {
         )}
       </div>
       
+      {/* Enhanced gradient overlay */}
       <div className="hero-bg-layer absolute inset-0"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/60 to-gray-900/80"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-800/70 to-gray-900/90"></div>
       
-      <div className="relative z-10 text-center px-4 sm:px-6 max-w-6xl mx-auto">
+      {/* Animated stars */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-1 h-1 bg-blue-400 rounded-full animate-pulse delay-300"></div>
+        <div className="absolute bottom-32 left-32 w-3 h-3 bg-purple-400 rounded-full animate-pulse delay-700"></div>
+        <div className="absolute bottom-20 right-10 w-2 h-2 bg-amber-300 rounded-full animate-pulse delay-1000"></div>
+        <div className="absolute top-60 left-1/2 w-1 h-1 bg-blue-300 rounded-full animate-pulse delay-500"></div>
+        <div className="absolute top-1/3 right-1/3 w-2 h-2 bg-indigo-400 rounded-full animate-pulse delay-200"></div>
+      </div>
+      
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-7xl mx-auto">
         <div className="mb-8 sm:mb-12 animate-fade-in-up">
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white leading-tight tracking-tight">
+          {/* Enhanced logo */}
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-2xl">
+              <Star className="w-10 h-10 text-white" />
+            </div>
+          </div>
+          
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-4 sm:mb-6 text-white leading-tight tracking-tight">
             STERNENHIMMELAUTO
           </h1>
-          <div className="w-24 sm:w-32 h-1 unified-gold-gradient mx-auto mb-6 sm:mb-8 animate-pulse-glow"></div>
-          <h2 className="text-lg sm:text-2xl md:text-3xl font-medium mb-6 sm:mb-8 text-gray-100 max-w-4xl mx-auto px-4">
+          <div className="w-32 sm:w-40 h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 mx-auto mb-6 sm:mb-8 animate-pulse-glow rounded-full"></div>
+          <h2 className="text-xl sm:text-3xl md:text-4xl font-medium mb-6 sm:mb-8 text-gray-100 max-w-5xl mx-auto px-4">
             Professioneller Einbau von Premium-Sternenhimmeln für Ihr Fahrzeug
           </h2>
-          <p className="text-base sm:text-xl text-gray-200 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-4">
+          <p className="text-lg sm:text-xl text-gray-200 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed px-4">
             Über 1000+ zufriedene Kunden vertrauen auf unsere Expertise. 
             Verwandeln Sie Ihr Fahrzeug mit hochwertigen Glasfasern in einen luxuriösen Raum.
           </p>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16 animate-slide-in-left delay-200 px-4">
+        {/* Enhanced CTA buttons */}
+        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-slide-in-left delay-200 px-4">
           <Button 
             size="lg" 
-            className="geometric-shape unified-button-gradient hover:unified-button-hover text-white font-semibold text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 border border-gray-600/50 transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
+            className="group bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-semibold text-lg px-12 py-6 rounded-xl shadow-2xl hover:shadow-amber-500/25 transform hover:scale-105 transition-all duration-300 border-2 border-amber-400/20"
           >
             Kostenlose Beratung
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-2 border-gray-500 bg-gray-800/50 text-gray-100 hover:unified-button-gradient hover:border-amber-400/50 font-semibold text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 transition-all duration-300"
+            className="border-2 border-gray-500 bg-gray-800/50 backdrop-blur-sm text-gray-100 hover:bg-gradient-to-r hover:from-amber-600/10 hover:to-amber-500/10 hover:border-amber-400/50 font-semibold text-lg px-12 py-6 rounded-xl transition-all duration-300 hover:shadow-xl"
           >
             Kontakt aufnehmen
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 max-w-4xl mx-auto animate-slide-in-right delay-400 px-4">
-          <div className="text-center p-4 sm:p-8 unified-card-bg border border-gray-600/50 transform hover:scale-105 transition-all duration-300 hover:bg-gray-800/60">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 unified-accent-gradient mx-auto mb-3 sm:mb-4 flex items-center justify-center text-white font-bold text-lg sm:text-xl geometric-shape">2h</div>
-            <div className="text-base sm:text-lg font-medium text-gray-100 mb-2">Schneller Einbau</div>
-            <div className="text-sm sm:text-base text-gray-300">Professionelle Installation</div>
+        {/* Enhanced feature cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto animate-slide-in-right delay-400 px-4">
+          <div className="group bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 hover:bg-gray-800/80 hover:shadow-2xl">
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl rounded-full shadow-lg group-hover:shadow-blue-500/25">
+              2h
+            </div>
+            <div className="text-xl font-semibold text-gray-100 mb-2">Schneller Einbau</div>
+            <div className="text-gray-300 flex items-center justify-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-green-400" />
+              Professionelle Installation
+            </div>
           </div>
-          <div className="text-center p-4 sm:p-8 unified-card-bg border border-gray-600/50 geometric-shape transform hover:scale-105 transition-all duration-300 hover:bg-gray-800/60">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 unified-accent-gradient mx-auto mb-3 sm:mb-4 flex items-center justify-center text-white font-bold text-lg sm:text-xl">5J</div>
-            <div className="text-base sm:text-lg font-medium text-gray-100 mb-2">Garantie</div>
-            <div className="text-sm sm:text-base text-gray-300">Vollumfänglicher Schutz</div>
+          <div className="group bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 hover:bg-gray-800/80 hover:shadow-2xl">
+            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl rounded-full shadow-lg group-hover:shadow-green-500/25">
+              5J
+            </div>
+            <div className="text-xl font-semibold text-gray-100 mb-2">Garantie</div>
+            <div className="text-gray-300 flex items-center justify-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-green-400" />
+              Vollumfänglicher Schutz
+            </div>
           </div>
-          <div className="text-center p-4 sm:p-8 unified-card-bg border border-gray-600/50 transform hover:scale-105 transition-all duration-300 hover:bg-gray-800/60 sm:col-span-2 md:col-span-1">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 unified-accent-gradient mx-auto mb-3 sm:mb-4 flex items-center justify-center text-white font-bold text-lg sm:text-xl">4.9</div>
-            <div className="text-base sm:text-lg font-medium text-gray-100 mb-2">Kundenbewertung</div>
-            <div className="text-sm sm:text-base text-gray-300">Über 1000 Bewertungen</div>
+          <div className="group bg-gray-800/60 backdrop-blur-sm border border-gray-600/50 rounded-2xl p-6 sm:p-8 transform hover:scale-105 transition-all duration-300 hover:bg-gray-800/80 hover:shadow-2xl sm:col-span-2 lg:col-span-1">
+            <div className="w-16 h-16 bg-gradient-to-r from-amber-500 to-amber-600 mx-auto mb-4 flex items-center justify-center text-white font-bold text-2xl rounded-full shadow-lg group-hover:shadow-amber-500/25">
+              4.9
+            </div>
+            <div className="text-xl font-semibold text-gray-100 mb-2">Kundenbewertung</div>
+            <div className="text-gray-300 flex items-center justify-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-green-400" />
+              Über 1000 Bewertungen
+            </div>
           </div>
         </div>
       </div>
