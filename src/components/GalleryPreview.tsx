@@ -9,43 +9,52 @@ const GalleryPreview = () => {
     {
       id: 1,
       title: 'BMW 7er Sternenhimmel',
-      image: '🌌'
+      description: 'Luxuriöse Installation im BMW 7er'
     },
     {
       id: 2,
       title: 'Mercedes S-Klasse',
-      image: '✨'
+      description: 'Premium Sternenhimmel in der S-Klasse'
     },
     {
       id: 3,
       title: 'Audi A8 Premium',
-      image: '⭐'
+      description: 'Elegante Glasfaser-Installation'
     }
   ];
 
   return (
-    <section className="py-16 px-6 floating-particles">
+    <section className="py-20 px-6 bg-gray-900">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold text-stellar-300 mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-6">
             UNSERE ARBEITEN
           </h2>
-          <p className="text-lg text-gray-300">
+          <div className="w-24 h-1 gold-accent mx-auto mb-6"></div>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Entdecken Sie einige unserer beeindruckendsten Sternenhimmel-Installationen
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {previewImages.map((item) => (
-            <Card key={item.id} className="bg-midnight-800/30 border-stellar-400/20 hover:border-stellar-400/40 transition-all duration-300 group">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          {previewImages.map((item, index) => (
+            <Card key={item.id} className={`bg-gray-800/50 border-gray-700 hover:border-gray-600 transition-all duration-300 group ${
+              index % 2 === 0 ? 'geometric-shape' : ''
+            }`}>
               <CardContent className="p-0">
-                <div className="aspect-video bg-gradient-to-br from-midnight-700/50 to-midnight-900/50 flex items-center justify-center text-5xl group-hover:scale-105 transition-transform duration-300">
-                  {item.image}
+                <div className="aspect-video image-placeholder">
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">📸</div>
+                    <div className="text-sm">Bild folgt</div>
+                  </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-space-grotesk font-semibold text-stellar-300 text-center">
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-100 mb-2">
                     {item.title}
                   </h3>
+                  <p className="text-gray-400">
+                    {item.description}
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -54,7 +63,7 @@ const GalleryPreview = () => {
 
         <div className="text-center">
           <Link to="/galerie">
-            <Button className="bg-stellar-500 hover:bg-stellar-600 text-midnight-900 font-poppins font-semibold">
+            <Button className="bg-gray-700 hover:bg-gray-600 text-gray-100 font-semibold px-8 py-3 border gold-border">
               Vollständige Galerie ansehen
             </Button>
           </Link>

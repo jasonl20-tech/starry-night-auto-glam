@@ -5,37 +5,14 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -47,6 +24,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+    --radius: 0.5rem;
   }
 }
 
@@ -61,19 +39,19 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-white;
+    @apply font-bold text-gray-100;
   }
 }
 
 @layer components {
   .professional-gradient {
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
   }
   
   .business-card {
-    background: rgba(30, 30, 30, 0.95);
+    background: rgba(15, 15, 15, 0.95);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(64, 64, 64, 0.5);
+    border: 1px solid rgba(64, 64, 64, 0.3);
   }
 
   .geometric-shape {
@@ -90,6 +68,28 @@
 
   .arrow-shape {
     clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+  }
+
+  .gold-accent {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+  }
+
+  .gold-border {
+    border: 1px solid #fbbf24;
+  }
+
+  .gold-text {
+    color: #fbbf24;
+  }
+
+  .image-placeholder {
+    background: linear-gradient(135deg, #1f2937, #374151);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 0.875rem;
+    border: 2px dashed #4b5563;
   }
 }
 
