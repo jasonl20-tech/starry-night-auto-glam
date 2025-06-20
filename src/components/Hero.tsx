@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -156,7 +157,7 @@ const Hero = () => {
       
       <div className="relative z-10 text-center px-3 sm:px-4 lg:px-6 max-w-7xl mx-auto">
         <div className="mb-6 sm:mb-8 lg:mb-12 animate-fade-in-up">
-          <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 text-white leading-tight tracking-tight">
+          <h1 className="animated-title text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-3 sm:mb-4 lg:mb-6 text-white leading-tight tracking-tight">
             STERNENHIMMELAUTO
           </h1>
           <div className="w-16 sm:w-24 lg:w-40 h-0.5 sm:h-1 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 mx-auto mb-4 sm:mb-6 lg:mb-8 animate-pulse-glow rounded-full"></div>
