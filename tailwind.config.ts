@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				gold: {
+					50: '#fffcf0',
+					100: '#fff8d6',
+					200: '#fff0ad',
+					300: '#ffe573',
+					400: '#ffd700',
+					500: '#f5c842',
+					600: '#daa520',
+					700: '#b8860b',
+					800: '#996515',
+					900: '#805020'
 				}
+			},
+			fontFamily: {
+				'orbitron': ['Orbitron', 'monospace'],
+				'rajdhani': ['Rajdhani', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,11 +101,32 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'sparkle': {
+					'0%, 100%': { 
+						opacity: '0',
+						transform: 'scale(0.5) rotate(0deg)'
+					},
+					'50%': { 
+						opacity: '1',
+						transform: 'scale(1) rotate(180deg)'
+					}
+				},
+				'drive': {
+					'0%': { transform: 'translateX(-100px) rotate(-10deg)' },
+					'100%': { transform: 'translateX(100px) rotate(10deg)' }
+				},
+				'glitter': {
+					'0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
+					'50%': { opacity: '1', transform: 'scale(1.2)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'sparkle': 'sparkle 2s ease-in-out infinite',
+				'drive': 'drive 1s ease-in-out infinite alternate',
+				'glitter': 'glitter 1.5s ease-in-out infinite'
 			}
 		}
 	},
