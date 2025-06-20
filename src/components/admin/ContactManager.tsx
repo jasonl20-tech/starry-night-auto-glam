@@ -49,9 +49,9 @@ const ContactManager = () => {
     } else {
       data?.forEach((config) => {
         if (config.key === 'contact_info' && typeof config.value === 'object' && config.value !== null) {
-          setContactInfo(config.value as ContactInfo);
+          setContactInfo(config.value as unknown as ContactInfo);
         } else if (config.key === 'social_media' && typeof config.value === 'object' && config.value !== null) {
-          setSocialMedia(config.value as SocialMedia);
+          setSocialMedia(config.value as unknown as SocialMedia);
         }
       });
     }

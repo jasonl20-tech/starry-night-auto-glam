@@ -15,10 +15,6 @@ interface UserProfile {
   role: string;
 }
 
-interface UserRole {
-  role: string;
-}
-
 const UserManager = () => {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
@@ -29,26 +25,32 @@ const UserManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data, error } = await supabase
+      // First get all profiles
+      const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
-        .select(`
-          id,
-          email,
-          full_name,
-          created_at,
-          user_roles (role)
-        `)
+        .select('id, email, full_name, created_at')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (profilesError) throw profilesError;
 
-      const formattedUsers = data?.map(user => ({
-        id: user.id,
-        email: user.email,
-        full_name: user.full_name,
-        created_at: user.created_at,
-        role: (user.user_roles as UserRole[])?.[0]?.role || 'user'
-      })) || [];
+      // Then get all user roles
+      const { data: rolesData, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('user_id, role');
+
+      if (rolesError) throw rolesError;
+
+      // Combine the data
+      const formattedUsers = profilesData?.map(profile => {
+        const userRole = rolesData?.find(role => role.user_id === profile.id);
+        return {
+          id: profile.id,
+          email: profile.email,
+          full_name: profile.full_name,
+          created_at: profile.created_at,
+          role: userRole?.role || 'user'
+        };
+      }) || [];
 
       setUsers(formattedUsers);
     } catch (error) {
