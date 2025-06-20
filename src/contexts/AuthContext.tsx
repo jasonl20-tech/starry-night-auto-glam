@@ -69,14 +69,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
+    // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         console.log('Auth state change:', event, session);
         setSession(session);
         setUser(session?.user ?? null);
         
+        // Use setTimeout to defer admin check to avoid blocking auth state changes
         if (session?.user) {
-          await checkAdminStatus(session.user.id, session.user.email || '');
+          setTimeout(() => {
+            checkAdminStatus(session.user.id, session.user.email || '');
+          }, 0);
         } else {
           setIsAdmin(false);
         }
@@ -85,14 +89,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     );
 
-    // Initiale Session überprüfen
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    // THEN check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
       console.log('Initial session:', session);
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        await checkAdminStatus(session.user.id, session.user.email || '');
+        setTimeout(() => {
+          checkAdminStatus(session.user.id, session.user.email || '');
+        }, 0);
       }
       
       setIsLoading(false);
@@ -113,11 +119,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signUp = async (email: string, password: string) => {
     console.log('Attempting sign up for:', email);
+    const redirectUrl = `${window.location.origin}/`;
+    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: undefined // Keine E-Mail-Bestätigung erforderlich
+        emailRedirectTo: redirectUrl
       }
     });
     console.log('Sign up result:', { data, error });

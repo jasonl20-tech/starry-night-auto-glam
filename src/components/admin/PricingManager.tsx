@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { Edit, Save, DollarSign, Plus } from 'lucide-react';
+import { Pencil, Save, X } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface PricingConfig {
   id: string;
@@ -15,240 +15,178 @@ interface PricingConfig {
     value: number;
     currency?: string;
   };
-  description: string | null;
+  description: string;
+  updated_at: string;
 }
 
 const PricingManager = () => {
-  const [pricingConfigs, setPricingConfigs] = useState<PricingConfig[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [pricingConfig, setPricingConfig] = useState<PricingConfig[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editValue, setEditValue] = useState<number>(0);
+  const [editValues, setEditValues] = useState<{ [key: string]: any }>({});
+  const [loading, setLoading] = useState(false);
 
-  const defaultPricingItems = [
-    { key: 'sternenhimmel_basic', description: 'Basis Sternenhimmel', defaultValue: 299 },
-    { key: 'sternenhimmel_premium', description: 'Premium Sternenhimmel', defaultValue: 499 },
-    { key: 'sternenhimmel_luxury', description: 'Luxury Sternenhimmel', defaultValue: 799 },
-    { key: 'installation_fee', description: 'Einbaugebühr', defaultValue: 150 },
-    { key: 'material_cost', description: 'Materialkosten', defaultValue: 100 }
-  ];
-
-  useEffect(() => {
-    fetchPricingConfigs();
-  }, []);
-
-  const fetchPricingConfigs = async () => {
-    setLoading(true);
+  const loadPricingConfig = async () => {
     try {
       const { data, error } = await supabase
-        .from('pricing_config')
+        .from('site_config')
         .select('*')
-        .order('key');
+        .like('key', 'pricing_%');
 
       if (error) throw error;
 
-      // If no pricing configs exist, create default ones
-      if (!data || data.length === 0) {
-        await createDefaultPricingConfigs();
-        return;
-      }
+      // Transform the data to match our interface
+      const transformedData: PricingConfig[] = data.map(item => ({
+        ...item,
+        value: typeof item.value === 'object' && item.value !== null 
+          ? item.value as { value: number; currency?: string }
+          : { value: 0, currency: 'EUR' }
+      }));
 
-      setPricingConfigs(data || []);
+      setPricingConfig(transformedData);
     } catch (error) {
-      console.error('Error fetching pricing configs:', error);
+      console.error('Error loading pricing config:', error);
       toast.error('Fehler beim Laden der Preiskonfiguration');
+    }
+  };
+
+  useEffect(() => {
+    loadPricingConfig();
+  }, []);
+
+  const handleEdit = (item: PricingConfig) => {
+    setEditingId(item.id);
+    setEditValues({
+      [item.id]: {
+        value: item.value.value,
+        currency: item.value.currency || 'EUR'
+      }
+    });
+  };
+
+  const handleSave = async (item: PricingConfig) => {
+    setLoading(true);
+    try {
+      const newValue = {
+        value: parseFloat(editValues[item.id]?.value || '0'),
+        currency: editValues[item.id]?.currency || 'EUR'
+      };
+
+      const { error } = await supabase
+        .from('site_config')
+        .update({ 
+          value: newValue,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', item.id);
+
+      if (error) throw error;
+
+      await loadPricingConfig();
+      setEditingId(null);
+      setEditValues({});
+      toast.success('Preis erfolgreich aktualisiert');
+    } catch (error) {
+      console.error('Error saving pricing:', error);
+      toast.error('Fehler beim Speichern des Preises');
     } finally {
       setLoading(false);
     }
   };
 
-  const createDefaultPricingConfigs = async () => {
-    try {
-      const insertData = defaultPricingItems.map(item => ({
-        key: item.key,
-        description: item.description,
-        value: { value: item.defaultValue, currency: 'EUR' }
-      }));
-
-      const { error } = await supabase
-        .from('pricing_config')
-        .insert(insertData);
-
-      if (error) throw error;
-
-      toast.success('Standard-Preiskonfiguration erstellt');
-      fetchPricingConfigs();
-    } catch (error) {
-      console.error('Error creating default pricing configs:', error);
-      toast.error('Fehler beim Erstellen der Standard-Preise');
-    }
-  };
-
-  const handleEdit = (config: PricingConfig) => {
-    setEditingId(config.id);
-    setEditValue(config.value?.value || 0);
-  };
-
-  const handleSave = async (configId: string) => {
-    try {
-      const { error } = await supabase
-        .from('pricing_config')
-        .update({ 
-          value: { value: editValue, currency: 'EUR' },
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', configId);
-
-      if (error) throw error;
-
-      toast.success('Preis aktualisiert');
-      setEditingId(null);
-      fetchPricingConfigs();
-    } catch (error) {
-      console.error('Error updating price:', error);
-      toast.error('Fehler beim Speichern');
-    }
-  };
-
   const handleCancel = () => {
     setEditingId(null);
-    setEditValue(0);
+    setEditValues({});
   };
-
-  const addNewPricingItem = async () => {
-    const key = prompt('Schlüssel für neuen Preiseintrag (z.B. "neue_option"):');
-    const description = prompt('Beschreibung:');
-    const priceStr = prompt('Preis (nur Zahl):');
-    
-    if (!key || !description || !priceStr) return;
-    
-    const price = parseFloat(priceStr);
-    if (isNaN(price)) {
-      toast.error('Ungültiger Preis eingegeben');
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('pricing_config')
-        .insert({
-          key: key.toLowerCase().replace(/\s+/g, '_'),
-          description,
-          value: { value: price, currency: 'EUR' }
-        });
-
-      if (error) throw error;
-
-      toast.success('Neuer Preiseintrag hinzugefügt');
-      fetchPricingConfigs();
-    } catch (error) {
-      console.error('Error adding pricing item:', error);
-      toast.error('Fehler beim Hinzufügen');
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-white">Lade Preiskonfiguration...</div>
-      </div>
-    );
-  }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <DollarSign className="w-6 h-6 text-amber-300" />
-          <h2 className="text-2xl font-bold text-white">Preis Verwaltung</h2>
-        </div>
-        <Button onClick={addNewPricingItem} className="bg-green-600 hover:bg-green-700">
-          <Plus className="w-4 h-4 mr-2" />
-          Neuer Preis
-        </Button>
-      </div>
-
-      <div className="grid gap-4">
-        {pricingConfigs.map((config) => (
-          <Card key={config.id} className="bg-gray-800 border-gray-700">
-            <CardHeader>
-              <CardTitle className="text-white">{config.description}</CardTitle>
-              <p className="text-gray-400 text-sm">Schlüssel: {config.key}</p>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Label className="text-gray-300">Preis (€):</Label>
-                  {editingId === config.id ? (
-                    <Input
-                      type="number"
-                      step="0.01"
-                      value={editValue}
-                      onChange={(e) => setEditValue(Number(e.target.value))}
-                      className="bg-gray-700 border-gray-600 text-white w-32"
-                      placeholder="0.00"
-                    />
-                  ) : (
-                    <span className="text-amber-300 font-bold text-lg">
-                      €{config.value?.value?.toFixed(2) || '0.00'}
-                    </span>
-                  )}
+    <Card className="bg-gray-800 border-gray-700">
+      <CardHeader>
+        <CardTitle className="text-amber-300">Preisverwaltung</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {pricingConfig.map((item) => (
+          <div key={item.id} className="flex items-center justify-between p-4 bg-gray-700 rounded-lg">
+            <div className="flex-1">
+              <Label className="text-gray-300 block mb-2">{item.description}</Label>
+              {editingId === item.id ? (
+                <div className="flex gap-2 items-center">
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={editValues[item.id]?.value || ''}
+                    onChange={(e) => setEditValues({
+                      ...editValues,
+                      [item.id]: {
+                        ...editValues[item.id],
+                        value: e.target.value
+                      }
+                    })}
+                    className="bg-gray-600 border-gray-500 text-white w-24"
+                  />
+                  <Input
+                    type="text"
+                    value={editValues[item.id]?.currency || 'EUR'}
+                    onChange={(e) => setEditValues({
+                      ...editValues,
+                      [item.id]: {
+                        ...editValues[item.id],
+                        currency: e.target.value
+                      }
+                    })}
+                    className="bg-gray-600 border-gray-500 text-white w-16"
+                    maxLength={3}
+                  />
                 </div>
-                <div className="flex gap-2">
-                  {editingId === config.id ? (
-                    <>
-                      <Button
-                        size="sm"
-                        onClick={() => handleSave(config.id)}
-                        className="bg-green-600 hover:bg-green-700"
-                      >
-                        <Save className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        size="sm"
-                        onClick={handleCancel}
-                        variant="outline"
-                        className="border-gray-600 text-gray-300"
-                      >
-                        Abbrechen
-                      </Button>
-                    </>
-                  ) : (
-                    <Button
-                      size="sm"
-                      onClick={() => handleEdit(config)}
-                      className="bg-blue-600 hover:bg-blue-700"
-                    >
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                  )}
+              ) : (
+                <div className="text-white text-lg font-semibold">
+                  {item.value.value} {item.value.currency || 'EUR'}
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              )}
+            </div>
+            <div className="flex gap-2">
+              {editingId === item.id ? (
+                <>
+                  <Button
+                    size="sm"
+                    onClick={() => handleSave(item)}
+                    disabled={loading}
+                    className="bg-green-600 hover:bg-green-700"
+                  >
+                    <Save className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleCancel}
+                    disabled={loading}
+                    className="border-gray-500 text-gray-300 hover:bg-gray-600"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleEdit(item)}
+                  className="border-gray-500 text-gray-300 hover:bg-gray-600"
+                >
+                  <Pencil className="w-4 h-4" />
+                </Button>
+              )}
+            </div>
+          </div>
         ))}
-      </div>
-
-      {pricingConfigs.length === 0 && (
-        <Card className="bg-gray-800 border-gray-700">
-          <CardContent className="text-center py-8">
-            <DollarSign className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-            <p className="text-gray-400 mb-4">Keine Preiskonfiguration gefunden</p>
-            <Button onClick={createDefaultPricingConfigs} className="bg-blue-600 hover:bg-blue-700">
-              Standard-Preise erstellen
-            </Button>
-          </CardContent>
-        </Card>
-      )}
-
-      <Card className="bg-gray-800 border-gray-700">
-        <CardContent className="p-4">
-          <p className="text-gray-400 text-sm">
-            <strong>Hinweis:</strong> Diese Preise werden in der Preiskalkulation auf der Website verwendet. 
-            Änderungen werden sofort auf der Website sichtbar.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+        
+        {pricingConfig.length === 0 && (
+          <div className="text-center text-gray-400 py-8">
+            Keine Preiskonfiguration gefunden. 
+            <br />
+            Erstellen Sie zuerst Einträge in der site_config Tabelle mit keys wie 'pricing_basic', 'pricing_premium', etc.
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
