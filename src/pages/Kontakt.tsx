@@ -136,7 +136,7 @@ const Kontakt = () => {
                     <div className="flex items-center space-x-3 hover:translate-x-2 transition-transform duration-300">
                       <span className="text-amber-400 text-xl">✉️</span>
                       <div>
-                        <pClassName="text-white font-medium">E-Mail</p>
+                        <p className="text-white font-medium">E-Mail</p>
                         <p className="text-gray-300">info@auto-sternenhimmel.de</p>
                       </div>
                     </div>
