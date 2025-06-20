@@ -37,26 +37,54 @@ const Hero = () => {
 
   const fetchHeroContent = async () => {
     try {
-      // Lade Hero-Bilder
+      // Lade Hero-Bilder aus hero_images Konfiguration
       const { data: heroData } = await supabase
         .from('app_config')
         .select('*')
         .eq('key', 'hero_images')
         .single();
       
+      let configuredHeroImages: HeroImage[] = [];
       if (heroData && heroData.value) {
-        setHeroImages((heroData.value as any) || []);
+        configuredHeroImages = (heroData.value as any) || [];
       }
 
-      // Lade Platzhalter-Konfiguration
-      const { data: placeholderData } = await supabase
-        .from('app_config')
+      // Lade auch hochgeladene Bilder mit hero placement
+      const { data: uploadedHeroData } = await supabase
+        .from('uploaded_images')
         .select('*')
-        .eq('key', 'hero_placeholders')
-        .single();
-      
-      if (placeholderData && placeholderData.value) {
-        setHeroPlaceholders((placeholderData.value as any) || []);
+        .eq('placement_type', 'hero')
+        .order('placement_position', { ascending: true });
+
+      const combinedHeroImages: HeroImage[] = [...configuredHeroImages];
+
+      // Füge hochgeladene Bilder hinzu
+      if (uploadedHeroData) {
+        uploadedHeroData.forEach(img => {
+          combinedHeroImages.push({
+            id: img.id,
+            url: img.url,
+            alt: img.alt_text || img.filename,
+            position: img.placement_position
+          });
+        });
+      }
+
+      // Sortiere nach Position
+      combinedHeroImages.sort((a, b) => a.position - b.position);
+      setHeroImages(combinedHeroImages);
+
+      // Lade Platzhalter-Konfiguration nur wenn keine Bilder vorhanden
+      if (combinedHeroImages.length === 0) {
+        const { data: placeholderData } = await supabase
+          .from('app_config')
+          .select('*')
+          .eq('key', 'hero_placeholders')
+          .single();
+        
+        if (placeholderData && placeholderData.value) {
+          setHeroPlaceholders((placeholderData.value as any) || []);
+        }
       }
     } catch (error) {
       console.log('Fehler beim Laden der Hero-Inhalte:', error);
