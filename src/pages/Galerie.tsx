@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 
 interface GalleryImage {
@@ -17,6 +18,7 @@ interface GalleryImage {
 const Galerie = () => {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
   useEffect(() => {
     fetchGalleryImages();
@@ -173,7 +175,11 @@ const Galerie = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {galleryImages.map((item) => (
-                <Card key={item.id} className="bg-midnight-800/50 border-stellar-400/30 hover:border-stellar-400/60 transition-all duration-300 group overflow-hidden">
+                <Card 
+                  key={item.id} 
+                  className="bg-midnight-800/50 border-stellar-400/30 hover:border-stellar-400/60 transition-all duration-300 group overflow-hidden cursor-pointer"
+                  onClick={() => setSelectedImage(item)}
+                >
                   <CardContent className="p-0">
                     <div className="aspect-video">
                       {item.image_url ? (
@@ -207,6 +213,34 @@ const Galerie = () => {
         </section>
       </main>
       <Footer />
+
+      {/* Bild-Vergrößerung Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden bg-midnight-800 border-stellar-400/30">
+          <DialogHeader>
+            <DialogTitle className="text-stellar-300">{selectedImage?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="relative">
+            {selectedImage?.image_url ? (
+              <img
+                src={selectedImage.image_url}
+                alt={selectedImage.title || 'Galerie Bild'}
+                className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+              />
+            ) : (
+              <div className="aspect-video bg-midnight-700 flex items-center justify-center rounded-lg">
+                <div className="text-center text-gray-400">
+                  <div className="text-4xl mb-2">🌌</div>
+                  <div className="text-lg">Bild folgt</div>
+                </div>
+              </div>
+            )}
+          </div>
+          {selectedImage?.description && (
+            <p className="text-gray-300 mt-4">{selectedImage.description}</p>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import GalleryPreview from '@/components/GalleryPreview';
 import About from '@/components/About';
+import VideoPreview from '@/components/VideoPreview';
 import PriceCalculator from '@/components/PriceCalculator';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
@@ -24,6 +25,7 @@ const Index = () => {
           <SocialProof />
           <About />
           <GalleryPreview />
+          <VideoPreview />
           <PriceCalculator />
           <Testimonials />
           <FAQ />
