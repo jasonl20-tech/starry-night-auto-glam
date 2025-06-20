@@ -28,47 +28,48 @@ const UrgencyBanner = () => {
   }, []);
 
   return (
-    <section className="py-16 px-6 bg-red-50">
+    <section className="py-16 px-6 bg-gradient-to-r from-red-900/20 to-orange-900/20">
       <div className="container mx-auto max-w-4xl">
-        <Card className="bg-white border-2 border-red-200">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <Card className="bg-gray-900/80 border-red-600/50 backdrop-blur-sm">
+          <CardContent className="p-10 text-center">
+            <div className="w-16 h-2 bg-gradient-to-r from-red-500 to-orange-500 mx-auto mb-6"></div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
               Begrenztes Angebot
             </h2>
-            <p className="text-xl text-gray-700 mb-6">
-              Nur noch <span className="text-red-600 font-bold">3 Termine</span> diese Woche verfügbar
+            <p className="text-xl text-gray-300 mb-8">
+              Nur noch <span className="text-red-400 font-bold text-2xl">3 Termine</span> diese Woche verfügbar
             </p>
             
-            <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-6">
-              <div className="bg-gray-50 p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-blue-600">{timeLeft.hours.toString().padStart(2, '0')}</div>
-                <div className="text-sm text-gray-600">Stunden</div>
+            <div className="grid grid-cols-3 gap-6 max-w-md mx-auto mb-8">
+              <div className="bg-gray-800/50 p-6 border border-gray-600 geometric-shape backdrop-blur-sm">
+                <div className="text-3xl font-bold text-red-400">{timeLeft.hours.toString().padStart(2, '0')}</div>
+                <div className="text-sm text-gray-400 font-medium">Stunden</div>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-blue-600">{timeLeft.minutes.toString().padStart(2, '0')}</div>
-                <div className="text-sm text-gray-600">Minuten</div>
+              <div className="bg-gray-800/50 p-6 border border-gray-600 backdrop-blur-sm">
+                <div className="text-3xl font-bold text-red-400">{timeLeft.minutes.toString().padStart(2, '0')}</div>
+                <div className="text-sm text-gray-400 font-medium">Minuten</div>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg border">
-                <div className="text-2xl font-bold text-blue-600">{timeLeft.seconds.toString().padStart(2, '0')}</div>
-                <div className="text-sm text-gray-600">Sekunden</div>
+              <div className="bg-gray-800/50 p-6 border border-gray-600 geometric-shape backdrop-blur-sm">
+                <div className="text-3xl font-bold text-red-400">{timeLeft.seconds.toString().padStart(2, '0')}</div>
+                <div className="text-sm text-gray-400 font-medium">Sekunden</div>
               </div>
             </div>
 
-            <div className="mb-6">
-              <div className="text-lg text-gray-600 mb-2">
+            <div className="mb-8">
+              <div className="text-2xl text-gray-400 mb-2">
                 <span className="line-through">499€</span> 
-                <span className="text-red-600 font-bold text-2xl ml-2">399€</span>
+                <span className="text-red-400 font-bold text-4xl ml-4">399€</span>
               </div>
-              <div className="text-sm text-gray-500">
+              <div className="text-gray-500 font-medium">
                 100€ Ersparnis nur für die nächsten 24 Stunden
               </div>
             </div>
 
-            <Button className="bg-red-600 hover:bg-red-700 text-white font-semibold text-lg px-8 py-4">
+            <Button className="arrow-shape bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-lg px-12 py-4 shadow-2xl transform hover:scale-105 transition-all duration-300">
               Jetzt Termin sichern
             </Button>
             
-            <p className="text-sm text-gray-500 mt-4">
+            <p className="text-sm text-gray-500 mt-6 font-medium">
               Limitiertes Angebot - Nur solange der Vorrat reicht
             </p>
           </CardContent>
