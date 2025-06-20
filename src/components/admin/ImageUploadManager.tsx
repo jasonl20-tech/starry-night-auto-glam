@@ -34,7 +34,16 @@ const ImageUploadManager = () => {
 
   useEffect(() => {
     fetchImages();
+    ensureStorageBucket();
   }, []);
+
+  const ensureStorageBucket = async () => {
+    try {
+      await supabase.functions.invoke('create-storage');
+    } catch (error) {
+      console.log('Storage setup:', error);
+    }
+  };
 
   const fetchImages = async () => {
     try {
@@ -295,6 +304,7 @@ const ImageUploadManager = () => {
                               <SelectItem value="none">Keine Platzierung</SelectItem>
                               <SelectItem value="hero">Hero Bereich</SelectItem>
                               <SelectItem value="gallery">Galerie</SelectItem>
+                              <SelectItem value="about">About Bereich</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -315,7 +325,8 @@ const ImageUploadManager = () => {
                       <p><strong>Alt Text:</strong> {image.alt_text || 'Nicht gesetzt'}</p>
                       <p><strong>Platzierung:</strong> {
                         image.placement_type === 'hero' ? 'Hero Bereich' :
-                        image.placement_type === 'gallery' ? 'Galerie' : 'Keine'
+                        image.placement_type === 'gallery' ? 'Galerie' :
+                        image.placement_type === 'about' ? 'About Bereich' : 'Keine'
                       } {image.placement_type !== 'none' && `(Position: ${image.placement_position})`}</p>
                       <p><strong>Hochgeladen:</strong> {new Date(image.created_at).toLocaleDateString('de-DE')}</p>
                     </div>
@@ -347,7 +358,7 @@ const ImageUploadManager = () => {
         <CardContent className="p-4">
           <p className="text-gray-400 text-sm">
             <strong>Hinweis:</strong> Unterstützte Dateiformate: JPEG, PNG, WebP, GIF. Maximale Dateigröße: 50MB.
-            Wählen Sie die Platzierung aus, um Bilder automatisch in der Hero-Sektion oder Galerie anzuzeigen.
+            Wählen Sie die Platzierung aus, um Bilder automatisch in der Hero-Sektion, Galerie oder About-Bereich anzuzeigen.
           </p>
         </CardContent>
       </Card>

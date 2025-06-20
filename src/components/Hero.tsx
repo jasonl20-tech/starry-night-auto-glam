@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Star, ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
 interface HeroImage {
   id: string;
@@ -160,7 +160,7 @@ const Hero = () => {
           {/* Enhanced logo */}
           <div className="flex justify-center mb-6">
             <div className="w-20 h-20 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-2xl">
-              <Star className="w-10 h-10 text-white" />
+              <div className="w-10 h-10 text-white font-bold text-2xl">S</div>
             </div>
           </div>
           
