@@ -2,8 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { Edit, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface GalleryImage {
   id: string;
@@ -12,11 +17,16 @@ interface GalleryImage {
   image_url?: string;
   url?: string;
   alt_text?: string;
+  source?: 'gallery' | 'uploaded';
 }
 
 const GalleryPreview = () => {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+  const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     fetchGalleryImages();
@@ -48,7 +58,8 @@ const GalleryPreview = () => {
           id: img.id,
           title: img.title,
           description: img.description,
-          image_url: img.image_url
+          image_url: img.image_url,
+          source: 'gallery' as const
         })));
       }
 
@@ -58,7 +69,8 @@ const GalleryPreview = () => {
           id: img.id,
           title: img.alt_text || img.filename,
           description: `Hochgeladenes Bild: ${img.filename}`,
-          image_url: img.url
+          image_url: img.url,
+          source: 'uploaded' as const
         })));
       }
 
@@ -68,17 +80,20 @@ const GalleryPreview = () => {
           {
             id: '1',
             title: 'BMW 7er Sternenhimmel',
-            description: 'Luxuriöse Installation im BMW 7er'
+            description: 'Luxuriöse Installation im BMW 7er',
+            source: 'gallery'
           },
           {
             id: '2',
             title: 'Mercedes S-Klasse',
-            description: 'Premium Sternenhimmel in der S-Klasse'
+            description: 'Premium Sternenhimmel in der S-Klasse',
+            source: 'gallery'
           },
           {
             id: '3',
             title: 'Audi A8 Premium',
-            description: 'Elegante Glasfaser-Installation'
+            description: 'Elegante Glasfaser-Installation',
+            source: 'gallery'
           }
         ]);
       } else {
@@ -91,21 +106,54 @@ const GalleryPreview = () => {
         {
           id: '1',
           title: 'BMW 7er Sternenhimmel',
-          description: 'Luxuriöse Installation im BMW 7er'
+          description: 'Luxuriöse Installation im BMW 7er',
+          source: 'gallery'
         },
         {
           id: '2',
           title: 'Mercedes S-Klasse',
-          description: 'Premium Sternenhimmel in der S-Klasse'
+          description: 'Premium Sternenhimmel in der S-Klasse',
+          source: 'gallery'
         },
         {
           id: '3',
           title: 'Audi A8 Premium',
-          description: 'Elegante Glasfaser-Installation'
+          description: 'Elegante Glasfaser-Installation',
+          source: 'gallery'
         }
       ]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUpdateTitle = async () => {
+    if (!editingImage || !editTitle.trim()) return;
+
+    try {
+      if (editingImage.source === 'gallery') {
+        const { error } = await supabase
+          .from('gallery_images')
+          .update({ title: editTitle })
+          .eq('id', editingImage.id);
+
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from('uploaded_images')
+          .update({ alt_text: editTitle })
+          .eq('id', editingImage.id);
+
+        if (error) throw error;
+      }
+
+      toast.success('Titel aktualisiert');
+      setEditingImage(null);
+      setEditTitle('');
+      fetchGalleryImages();
+    } catch (error) {
+      console.error('Fehler beim Aktualisieren:', error);
+      toast.error('Fehler beim Aktualisieren des Titels');
     }
   };
 
@@ -136,16 +184,19 @@ const GalleryPreview = () => {
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           {galleryImages.map((item, index) => (
-            <Card key={item.id} className={`bg-gray-800/50 border-gray-700 hover:border-gray-600 transition-all duration-300 group ${
+            <Card key={item.id} className={`bg-gray-800/50 border-gray-700 hover:border-gray-600 transition-all duration-300 group cursor-pointer ${
               index % 2 === 0 ? 'geometric-shape' : ''
             }`}>
               <CardContent className="p-0">
-                <div className="aspect-video">
+                <div 
+                  className="aspect-video relative"
+                  onClick={() => setSelectedImage(item)}
+                >
                   {item.image_url ? (
                     <img
                       src={item.image_url}
                       alt={item.title || 'Galerie Bild'}
-                      className="w-full h-full object-cover rounded-t-lg"
+                      className="w-full h-full object-cover rounded-t-lg group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                         (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
@@ -158,11 +209,32 @@ const GalleryPreview = () => {
                       <div className="text-sm">Bild folgt</div>
                     </div>
                   </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-sm font-medium">
+                      Zum Vergrößern klicken
+                    </div>
+                  </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-100 mb-2">
-                    {item.title}
-                  </h3>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-bold text-gray-100 mb-2 flex-1">
+                      {item.title}
+                    </h3>
+                    {isAdmin && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingImage(item);
+                          setEditTitle(item.title || '');
+                        }}
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
                   <p className="text-gray-400">
                     {item.description}
                   </p>
@@ -180,6 +252,59 @@ const GalleryPreview = () => {
           </Link>
         </div>
       </div>
+
+      {/* Bild-Vergrößerung Dialog */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden bg-gray-900 border-gray-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">{selectedImage?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="relative">
+            {selectedImage?.image_url ? (
+              <img
+                src={selectedImage.image_url}
+                alt={selectedImage.title || 'Galerie Bild'}
+                className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+              />
+            ) : (
+              <div className="aspect-video bg-gray-800 flex items-center justify-center rounded-lg">
+                <div className="text-center text-gray-400">
+                  <div className="text-4xl mb-2">📸</div>
+                  <div className="text-lg">Bild folgt</div>
+                </div>
+              </div>
+            )}
+          </div>
+          {selectedImage?.description && (
+            <p className="text-gray-300 mt-4">{selectedImage.description}</p>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Titel bearbeiten Dialog */}
+      <Dialog open={!!editingImage} onOpenChange={() => setEditingImage(null)}>
+        <DialogContent className="bg-gray-800 border-gray-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Titel bearbeiten</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Input
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              placeholder="Neuer Titel"
+              className="bg-gray-700 border-gray-600 text-white"
+            />
+            <div className="flex gap-2">
+              <Button onClick={handleUpdateTitle} className="bg-green-600 hover:bg-green-700">
+                Speichern
+              </Button>
+              <Button variant="outline" onClick={() => setEditingImage(null)} className="border-gray-600 text-gray-300">
+                Abbrechen
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
