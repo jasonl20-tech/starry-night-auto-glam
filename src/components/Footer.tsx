@@ -18,9 +18,9 @@ interface SocialMedia {
 
 const Footer = () => {
   const [contactInfo, setContactInfo] = useState<ContactInfo>({
-    phone: '+49 123 456 789',
+    phone: '+49 151 47918371',
     email: 'info@sternenhimmelauto.de',
-    address: 'Musterstraße 123, 12345 Musterstadt'
+    address: 'Louis-steitz-straße, 67292 Kirchheimbolanden'
   });
   const [socialMedia, setSocialMedia] = useState<SocialMedia>({
     facebook: '#',

@@ -123,21 +123,21 @@ const Kontakt = () => {
                       <span className="text-amber-400 text-xl">📍</span>
                       <div>
                         <p className="text-white font-medium">Adresse</p>
-                        <p className="text-gray-300">Musterstraße 123, 12345 Musterstadt</p>
+                        <p className="text-gray-300">Louis-steitz-straße, 67292 Kirchheimbolanden</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3 hover:translate-x-2 transition-transform duration-300">
                       <span className="text-amber-400 text-xl">📞</span>
                       <div>
                         <p className="text-white font-medium">Telefon</p>
-                        <p className="text-gray-300">+49 123 456 789</p>
+                        <p className="text-gray-300">+49 151 47918371</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-3 hover:translate-x-2 transition-transform duration-300">
                       <span className="text-amber-400 text-xl">✉️</span>
                       <div>
                         <p className="text-white font-medium">E-Mail</p>
-                        <p className="text-gray-300">info@auto-sternenhimmel.de</p>
+                        <p className="text-gray-300">info@sternenhimmelauto.de</p>
                       </div>
                     </div>
                   </CardContent>

@@ -17,7 +17,7 @@ const SocialProof = () => {
       label: 'Durchschnittsbewertung',
     },
     {
-      number: '2h',
+      number: '5 Tage',
       label: 'Durchschnittliche Einbauzeit',
     }
   ];
