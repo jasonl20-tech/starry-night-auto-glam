@@ -34,75 +34,76 @@ const Kontakt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-900 text-white">
       <Navbar />
       <main className="pt-20">
         <section className="py-20 px-6">
           <div className="container mx-auto max-w-6xl">
-            <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-6xl font-orbitron font-bold text-gold-400 mb-6">
+            <div className="text-center mb-16 animate-fade-in-up">
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 hover:text-amber-300 transition-colors duration-500">
                 KONTAKT
               </h1>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              <div className="w-24 h-1 bg-gradient-to-r from-amber-400 to-amber-600 mx-auto mb-6 animate-pulse-glow"></div>
+              <p className="text-xl text-gray-300 max-w-3xl mx-auto animate-slide-in-left delay-200">
                 Haben Sie Fragen oder möchten Sie einen Termin vereinbaren? 
                 Wir freuen uns auf Ihre Nachricht!
               </p>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
-              <Card className="bg-gray-900/50 border-gold-400/30">
+              <Card className="bg-gray-800/60 backdrop-blur-sm border-gray-600/50 hover:bg-gray-800/80 hover:scale-105 transition-all duration-500 animate-slide-in-left delay-300">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-orbitron font-bold text-gold-400">
+                  <CardTitle className="text-2xl font-bold text-amber-400 flex items-center">
                     📧 Nachricht senden
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
+                    <div className="hover:scale-105 transition-transform duration-300">
                       <Input
                         name="name"
                         placeholder="Ihr Name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="bg-black/50 border-gold-400/30 text-white placeholder:text-gray-400 focus:border-gold-400"
+                        className="bg-gray-900/50 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-amber-400 focus:ring-amber-400/20 transition-all duration-300"
                         required
                       />
                     </div>
-                    <div>
+                    <div className="hover:scale-105 transition-transform duration-300">
                       <Input
                         name="email"
                         type="email"
                         placeholder="Ihre E-Mail"
                         value={formData.email}
                         onChange={handleChange}
-                        className="bg-black/50 border-gold-400/30 text-white placeholder:text-gray-400 focus:border-gold-400"
+                        className="bg-gray-900/50 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-amber-400 focus:ring-amber-400/20 transition-all duration-300"
                         required
                       />
                     </div>
-                    <div>
+                    <div className="hover:scale-105 transition-transform duration-300">
                       <Input
                         name="phone"
                         placeholder="Ihre Telefonnummer"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="bg-black/50 border-gold-400/30 text-white placeholder:text-gray-400 focus:border-gold-400"
+                        className="bg-gray-900/50 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-amber-400 focus:ring-amber-400/20 transition-all duration-300"
                       />
                     </div>
-                    <div>
+                    <div className="hover:scale-105 transition-transform duration-300">
                       <Textarea
                         name="message"
                         placeholder="Ihre Nachricht"
                         value={formData.message}
                         onChange={handleChange}
                         rows={5}
-                        className="bg-black/50 border-gold-400/30 text-white placeholder:text-gray-400 focus:border-gold-400"
+                        className="bg-gray-900/50 border-gray-600/50 text-white placeholder:text-gray-400 focus:border-amber-400 focus:ring-amber-400/20 transition-all duration-300"
                         required
                       />
                     </div>
                     <Button 
                       type="submit"
                       size="lg"
-                      className="w-full bg-gold-400 hover:bg-gold-500 text-black font-rajdhani font-bold text-lg"
+                      className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-bold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-amber-500/25"
                     >
                       Nachricht senden
                     </Button>
@@ -110,56 +111,56 @@ const Kontakt = () => {
                 </CardContent>
               </Card>
 
-              <div className="space-y-8">
-                <Card className="bg-gray-900/50 border-gold-400/30">
+              <div className="space-y-8 animate-slide-in-right delay-400">
+                <Card className="bg-gray-800/60 backdrop-blur-sm border-gray-600/50 hover:bg-gray-800/80 hover:scale-105 transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-2xl font-orbitron font-bold text-gold-400">
+                    <CardTitle className="text-2xl font-bold text-amber-400">
                       📍 Kontaktdaten
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-gold-400">📍</span>
+                    <div className="flex items-center space-x-3 hover:translate-x-2 transition-transform duration-300">
+                      <span className="text-amber-400 text-xl">📍</span>
                       <div>
                         <p className="text-white font-medium">Adresse</p>
                         <p className="text-gray-300">Musterstraße 123, 12345 Musterstadt</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-gold-400">📞</span>
+                    <div className="flex items-center space-x-3 hover:translate-x-2 transition-transform duration-300">
+                      <span className="text-amber-400 text-xl">📞</span>
                       <div>
                         <p className="text-white font-medium">Telefon</p>
                         <p className="text-gray-300">+49 123 456 789</p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <span className="text-gold-400">✉️</span>
+                    <div className="flex items-center space-x-3 hover:translate-x-2 transition-transform duration-300">
+                      <span className="text-amber-400 text-xl">✉️</span>
                       <div>
-                        <p className="text-white font-medium">E-Mail</p>
+                        <pClassName="text-white font-medium">E-Mail</p>
                         <p className="text-gray-300">info@auto-sternenhimmel.de</p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gray-900/50 border-gold-400/30">
+                <Card className="bg-gray-800/60 backdrop-blur-sm border-gray-600/50 hover:bg-gray-800/80 hover:scale-105 transition-all duration-500">
                   <CardHeader>
-                    <CardTitle className="text-2xl font-orbitron font-bold text-gold-400">
+                    <CardTitle className="text-2xl font-bold text-amber-400">
                       🕒 Öffnungszeiten
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between hover:bg-gray-700/30 p-2 rounded transition-colors duration-300">
                       <span className="text-gray-300">Montag - Freitag:</span>
-                      <span className="text-white">9:00 - 18:00</span>
+                      <span className="text-white font-medium">9:00 - 18:00</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between hover:bg-gray-700/30 p-2 rounded transition-colors duration-300">
                       <span className="text-gray-300">Samstag:</span>
-                      <span className="text-white">10:00 - 16:00</span>
+                      <span className="text-white font-medium">10:00 - 16:00</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between hover:bg-gray-700/30 p-2 rounded transition-colors duration-300">
                       <span className="text-gray-300">Sonntag:</span>
-                      <span className="text-white">Geschlossen</span>
+                      <span className="text-white font-medium">Geschlossen</span>
                     </div>
                   </CardContent>
                 </Card>
