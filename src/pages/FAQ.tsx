@@ -8,8 +8,10 @@ const FAQPage = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <Navbar />
-      <main className="pt-20">
-        <FAQ />
+      <main className="pt-16 sm:pt-20">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <FAQ />
+        </div>
       </main>
       <Footer />
     </div>
