@@ -37,13 +37,13 @@ const Blog = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-midnight-900 text-white">
       <Navbar />
       <main className="pt-20">
         <section className="py-20 px-6">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-6xl font-orbitron font-bold text-gold-400 mb-6">
+              <h1 className="text-4xl md:text-6xl font-space-grotesk font-bold text-stellar-300 mb-6">
                 BLOG
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -54,17 +54,17 @@ const Blog = () => {
 
             <div className="grid md:grid-cols-2 gap-8">
               {blogPosts.map((post) => (
-                <Card key={post.id} className="bg-gray-900/50 border-gold-400/30 hover:border-gold-400/60 transition-all duration-300 group">
+                <Card key={post.id} className="bg-midnight-800/50 border-stellar-400/30 hover:border-stellar-400/60 transition-all duration-300 group">
                   <CardHeader>
                     <div className="flex justify-between items-start mb-2">
-                      <span className="text-sm text-gold-400 font-rajdhani font-medium">
+                      <span className="text-sm text-stellar-400 font-poppins font-medium">
                         {post.category}
                       </span>
                       <span className="text-sm text-gray-400">
                         {post.date}
                       </span>
                     </div>
-                    <CardTitle className="text-xl font-orbitron font-bold text-gold-400 group-hover:text-gold-300 transition-colors">
+                    <CardTitle className="text-xl font-space-grotesk font-bold text-stellar-300 group-hover:text-stellar-200 transition-colors">
                       {post.title}
                     </CardTitle>
                   </CardHeader>
@@ -72,7 +72,7 @@ const Blog = () => {
                     <p className="text-gray-300 mb-4 leading-relaxed">
                       {post.excerpt}
                     </p>
-                    <button className="text-gold-400 hover:text-gold-300 font-rajdhani font-medium transition-colors">
+                    <button className="text-stellar-300 hover:text-stellar-200 font-poppins font-medium transition-colors">
                       Weiterlesen →
                     </button>
                   </CardContent>

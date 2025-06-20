@@ -10,7 +10,7 @@ const Hero = () => {
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-gold-400 rounded-full animate-sparkle"
+            className="absolute w-1 h-1 bg-stellar-300 rounded-full animate-sparkle"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -22,7 +22,7 @@ const Hero = () => {
       </div>
       
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <h1 className="text-5xl md:text-7xl font-space-grotesk font-black mb-6 text-gold-400">
+        <h1 className="text-5xl md:text-7xl font-space-grotesk font-black mb-6 text-stellar-300">
           AUTO STERNENHIMMEL
         </h1>
         <h2 className="text-2xl md:text-3xl font-poppins font-medium mb-8 text-white">
@@ -36,14 +36,14 @@ const Hero = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             size="lg" 
-            className="bg-gold-400 hover:bg-gold-500 text-black font-poppins font-bold text-lg px-8 py-4"
+            className="bg-stellar-500 hover:bg-stellar-600 text-midnight-900 font-poppins font-bold text-lg px-8 py-4"
           >
             Jetzt Preis berechnen
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
-            className="border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-black font-poppins font-bold text-lg px-8 py-4"
+            className="border-stellar-400 text-stellar-300 hover:bg-stellar-400 hover:text-midnight-900 font-poppins font-bold text-lg px-8 py-4"
           >
             Galerie ansehen
           </Button>

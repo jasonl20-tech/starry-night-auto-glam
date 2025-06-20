@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -62,17 +63,54 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				gold: {
-					50: '#fffcf0',
-					100: '#fff8d6',
-					200: '#fff0ad',
-					300: '#ffe573',
-					400: '#ffd700',
-					500: '#f5c842',
-					600: '#daa520',
-					700: '#b8860b',
-					800: '#996515',
-					900: '#805020'
+				// Nachthimmel & Sterne Theme
+				midnight: {
+					50: '#f0f2f8',
+					100: '#d8dde8',
+					200: '#b8c2d6',
+					300: '#8a9ac2',
+					400: '#5c72ab',
+					500: '#3a4d7a',
+					600: '#2d3b5f',
+					700: '#212947',
+					800: '#161b30',
+					900: '#0a0e1a'
+				},
+				stellar: {
+					50: '#f7fbff',
+					100: '#e6f3ff',
+					200: '#cce6ff',
+					300: '#b3d9ff',
+					400: '#99ccff',
+					500: '#80bfff',
+					600: '#4da6ff',
+					700: '#1a8cff',
+					800: '#0073e6',
+					900: '#005bb3'
+				},
+				nebula: {
+					50: '#f5f8ff',
+					100: '#e8efff',
+					200: '#d1dfff',
+					300: '#a8d0ff',
+					400: '#7bb3f0',
+					500: '#4a90e2',
+					600: '#3a7bd5',
+					700: '#2c5aa0',
+					800: '#1e3f73',
+					900: '#0f1f36'
+				},
+				cosmic: {
+					50: '#f4f6f8',
+					100: '#e8ecf0',
+					200: '#d1d9e0',
+					300: '#a8b8c8',
+					400: '#718096',
+					500: '#4a5568',
+					600: '#3a424e',
+					700: '#2d3748',
+					800: '#1a202c',
+					900: '#0d1117'
 				}
 			},
 			fontFamily: {

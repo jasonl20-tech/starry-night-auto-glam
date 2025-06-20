@@ -24,7 +24,7 @@ const BlogPreview = () => {
     <section className="py-16 px-6">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold text-gold-400 mb-4">
+          <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold text-stellar-300 mb-4">
             AKTUELLES AUS UNSEREM BLOG
           </h2>
           <p className="text-lg text-gray-300">
@@ -34,14 +34,14 @@ const BlogPreview = () => {
 
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           {recentPosts.map((post) => (
-            <Card key={post.id} className="bg-gray-900/30 border-gold-400/20 hover:border-gold-400/40 transition-all duration-300">
+            <Card key={post.id} className="bg-midnight-800/30 border-stellar-400/20 hover:border-stellar-400/40 transition-all duration-300">
               <CardHeader>
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-sm text-gray-400">
                     {post.date}
                   </span>
                 </div>
-                <CardTitle className="text-xl font-space-grotesk font-semibold text-gold-400">
+                <CardTitle className="text-xl font-space-grotesk font-semibold text-stellar-300">
                   {post.title}
                 </CardTitle>
               </CardHeader>
@@ -49,7 +49,7 @@ const BlogPreview = () => {
                 <p className="text-gray-300 mb-4">
                   {post.excerpt}
                 </p>
-                <button className="text-gold-400 hover:text-gold-300 font-poppins font-medium transition-colors">
+                <button className="text-stellar-300 hover:text-stellar-200 font-poppins font-medium transition-colors">
                   Weiterlesen →
                 </button>
               </CardContent>
@@ -59,7 +59,7 @@ const BlogPreview = () => {
 
         <div className="text-center">
           <Link to="/blog">
-            <Button className="bg-gold-400 hover:bg-gold-500 text-black font-poppins font-semibold">
+            <Button className="bg-stellar-500 hover:bg-stellar-600 text-midnight-900 font-poppins font-semibold">
               Alle Blog-Artikel ansehen
             </Button>
           </Link>

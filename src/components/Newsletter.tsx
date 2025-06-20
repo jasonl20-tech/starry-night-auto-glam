@@ -25,9 +25,9 @@ const Newsletter = () => {
     <section className="py-20 px-6">
       <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-8">
-          <Card className="bg-gradient-to-r from-gray-900/80 to-black/80 border-gold-400/50 backdrop-blur-sm">
+          <Card className="bg-gradient-to-r from-midnight-800/80 to-midnight-900/80 border-stellar-400/50 backdrop-blur-sm">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl md:text-3xl font-space-grotesk font-bold text-gold-400 mb-4">
+              <CardTitle className="text-2xl md:text-3xl font-space-grotesk font-bold text-stellar-300 mb-4">
                 📧 NEWSLETTER ABONNIEREN
               </CardTitle>
               <p className="text-lg text-gray-300">
@@ -41,12 +41,12 @@ const Newsletter = () => {
                   placeholder="Ihre E-Mail Adresse"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-black/50 border-gold-400/30 text-white placeholder:text-gray-400 focus:border-gold-400"
+                  className="bg-midnight-900/50 border-stellar-400/30 text-white placeholder:text-gray-400 focus:border-stellar-400"
                   required
                 />
                 <Button 
                   type="submit"
-                  className="bg-gold-400 hover:bg-gold-500 text-black font-poppins font-bold whitespace-nowrap"
+                  className="bg-stellar-500 hover:bg-stellar-600 text-midnight-900 font-poppins font-bold whitespace-nowrap"
                 >
                   Anmelden
                 </Button>

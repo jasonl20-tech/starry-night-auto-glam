@@ -45,13 +45,13 @@ const Galerie = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-midnight-900 text-white">
       <Navbar />
       <main className="pt-20">
         <section className="py-20 px-6">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-6xl font-orbitron font-bold text-gold-400 mb-6">
+              <h1 className="text-4xl md:text-6xl font-space-grotesk font-bold text-stellar-300 mb-6">
                 GALERIE
               </h1>
               <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -62,13 +62,13 @@ const Galerie = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {galleryImages.map((item) => (
-                <Card key={item.id} className="bg-gray-900/50 border-gold-400/30 hover:border-gold-400/60 transition-all duration-300 group overflow-hidden">
+                <Card key={item.id} className="bg-midnight-800/50 border-stellar-400/30 hover:border-stellar-400/60 transition-all duration-300 group overflow-hidden">
                   <CardContent className="p-0">
-                    <div className="aspect-video bg-gradient-to-br from-gray-800 to-black flex items-center justify-center text-6xl group-hover:scale-105 transition-transform duration-300">
+                    <div className="aspect-video bg-gradient-to-br from-midnight-700 to-midnight-900 flex items-center justify-center text-6xl group-hover:scale-105 transition-transform duration-300">
                       {item.image}
                     </div>
                     <div className="p-6">
-                      <h3 className="text-xl font-orbitron font-bold text-gold-400 mb-2">
+                      <h3 className="text-xl font-space-grotesk font-bold text-stellar-300 mb-2">
                         {item.title}
                       </h3>
                       <p className="text-gray-300 text-sm">
