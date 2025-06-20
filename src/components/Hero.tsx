@@ -157,13 +157,6 @@ const Hero = () => {
       
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-7xl mx-auto">
         <div className="mb-8 sm:mb-12 animate-fade-in-up">
-          {/* Enhanced logo */}
-          <div className="flex justify-center mb-6">
-            <div className="w-20 h-20 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full flex items-center justify-center shadow-2xl">
-              <div className="w-10 h-10 text-white font-bold text-2xl">S</div>
-            </div>
-          </div>
-          
           <h1 className="text-4xl sm:text-6xl md:text-8xl font-bold mb-4 sm:mb-6 text-white leading-tight tracking-tight">
             STERNENHIMMELAUTO
           </h1>

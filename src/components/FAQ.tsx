@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -8,22 +8,44 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { supabase } from '@/integrations/supabase/client';
+
+interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+  order_index: number;
+  published: boolean;
+}
 
 const FAQ = () => {
-  const faqs = [
-    {
-      question: "Wie lange dauert der Einbau eines Sternenhimmels?",
-      answer: "Der professionelle Einbau dauert in der Regel 2-4 Stunden, je nach Fahrzeugmodell und gewünschter Konfiguration. Wir arbeiten präzise und sorgfältig, um ein perfektes Ergebnis zu garantieren."
-    },
-    {
-      question: "Beeinträchtigt der Sternenhimmel die Garantie meines Fahrzeugs?",
-      answer: "Nein, unsere professionelle Installation beeinträchtigt nicht die Herstellergarantie Ihres Fahrzeugs. Wir verwenden nur hochwertige Materialien und bewährte Einbautechniken, die reversibel sind."
-    },
-    {
-      question: "Wie pflege ich meinen Auto-Sternenhimmel richtig?",
-      answer: "Die Pflege ist sehr einfach: Verwenden Sie nur ein trockenes, weiches Mikrofasertuch zur Reinigung. Vermeiden Sie Feuchtigkeit und chemische Reinigungsmittel. Bei normaler Nutzung ist kaum Wartung erforderlich."
+  const [faqs, setFaqs] = useState<FAQ[]>([]);
+
+  useEffect(() => {
+    fetchFaqs();
+  }, []);
+
+  const fetchFaqs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('faqs')
+        .select('*')
+        .eq('published', true)
+        .order('order_index', { ascending: true });
+
+      if (error) {
+        console.error('Fehler beim Laden der FAQs:', error);
+      } else {
+        setFaqs(data || []);
+      }
+    } catch (error) {
+      console.error('Fehler beim Laden der FAQs:', error);
     }
-  ];
+  };
+
+  if (faqs.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-20 px-6 bg-gray-900">
@@ -42,7 +64,7 @@ const FAQ = () => {
           <CardContent className="p-8">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="border-gray-600">
+                <AccordionItem key={faq.id} value={`item-${index}`} className="border-gray-600">
                   <AccordionTrigger className="text-left text-lg font-bold text-white hover:text-gray-300 py-6">
                     {faq.question}
                   </AccordionTrigger>
