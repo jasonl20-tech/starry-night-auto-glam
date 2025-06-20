@@ -624,6 +624,42 @@ export type Database = {
         }
         Relationships: []
       }
+      uploaded_images: {
+        Row: {
+          alt_text: string | null
+          created_at: string | null
+          filename: string
+          id: string
+          placement_position: number | null
+          placement_type: string
+          updated_at: string | null
+          uploaded_by: string | null
+          url: string
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string | null
+          filename: string
+          id?: string
+          placement_position?: number | null
+          placement_type?: string
+          updated_at?: string | null
+          uploaded_by?: string | null
+          url: string
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string | null
+          filename?: string
+          id?: string
+          placement_position?: number | null
+          placement_type?: string
+          updated_at?: string | null
+          uploaded_by?: string | null
+          url?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
