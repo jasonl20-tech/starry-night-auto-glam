@@ -3,7 +3,6 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import GalleryPreview from '@/components/GalleryPreview';
-import CarSelector from '@/components/CarSelector';
 import About from '@/components/About';
 import PriceCalculator from '@/components/PriceCalculator';
 import Testimonials from '@/components/Testimonials';
@@ -25,7 +24,6 @@ const Index = () => {
         <SocialProof />
         <About />
         <GalleryPreview />
-        <CarSelector />
         <PriceCalculator />
         <Testimonials />
         <FAQ />
